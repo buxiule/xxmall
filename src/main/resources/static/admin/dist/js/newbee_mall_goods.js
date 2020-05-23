@@ -173,3 +173,69 @@ function putDownGoods() {
     )
     ;
 }
+
+
+/**
+ * 删除
+ */
+function deleteGoods() {
+    var ids = getSelectedRows();
+    if (ids == null) {
+        return;
+    }
+    swal({
+        title: "确认弹框",
+        text: "确认要执行删除操作吗?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/goods/delete",
+                    contentType: "application/json",
+                    data: JSON.stringify(ids),
+                    success: function (r) {
+                        if (r.resultCode == 200) {
+                            swal("删除成功", {
+                                icon: "success",
+                            });
+                            $("#jqGrid").trigger("reloadGrid");
+                        } else {
+                            swal(r.message, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    )
+    ;
+}
+
+/**
+ * 搜索
+ */
+
+function searchGoods() {
+    $('#goodsModal').modal('show');
+}
+
+// function saveButton() {
+//     var id = $('#goodsId').val();
+//     if (isNull(goodsName) && isNull(id)) {
+//         swal("请输入商品ID", {
+//             icon: "error",
+//         });
+//         return;
+//     }
+//     $("#jqGrid").jqGrid('setGridParam', {
+//         url: "/goods/search",
+//         postData: {'id': id }, //发送数据
+//         page: 1
+//     }).trigger("reloadGrid"); //重新载入
+// }
+
+
