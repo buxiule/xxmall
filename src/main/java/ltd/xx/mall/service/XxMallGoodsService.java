@@ -40,12 +40,12 @@ public interface XxMallGoodsService {
     String updateXxMallGoods(XxMallGoods goods);
 
     /**
-     * 修改商品信息
+     * 查询商品
      *
      * @param
      * @return
      */
-    PageResult getXxMallGoodsPageById(Long id);
+    PageResult getXxMallGoodsPageById(PageQueryUtil pageUtil, Long id);
 
     /**
      * 获取商品详情

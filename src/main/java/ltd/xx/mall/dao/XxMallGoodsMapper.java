@@ -14,6 +14,8 @@ public interface XxMallGoodsMapper {
 
     int insertSelective(XxMallGoods record);
 
+//    XxMallGoods selectMallById(Long goodsId);
+
     XxMallGoods selectByPrimaryKey(Long goodsId);
 
     int updateByPrimaryKeySelective(XxMallGoods record);

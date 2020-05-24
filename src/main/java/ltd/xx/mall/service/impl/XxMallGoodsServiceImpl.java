@@ -71,31 +71,16 @@ public class XxMallGoodsServiceImpl implements XxMallGoodsService {
     }
 
     @Override
-    public PageResult getXxMallGoodsPageById(Long id){
+    public PageResult getXxMallGoodsPageById(PageQueryUtil pageUtil, Long id){
         List<XxMallGoods> goodsList = new ArrayList<>();
         XxMallGoods goods = goodsMapper.selectByPrimaryKey(id);
         List<XxMallSearchGoodsVO> xxMallSearchGoodsVOS = new ArrayList<>();
         int total = 0;
         if (!ObjectUtils.isEmpty(goods)) {
-            total++;
+            total=1;
             goodsList.add(goods);
-            xxMallSearchGoodsVOS = BeanUtil.copyList(goodsList, XxMallSearchGoodsVO.class);
-            for (XxMallSearchGoodsVO xxMallSearchGoodsVO : xxMallSearchGoodsVOS) {
-                String goodsName = xxMallSearchGoodsVO.getGoodsName();
-                String goodsIntro = xxMallSearchGoodsVO.getGoodsIntro();
-                // 字符串过长导致文字超出的问题
-                if (goodsName.length() > 28) {
-                    goodsName = goodsName.substring(0, 28) + "...";
-                    xxMallSearchGoodsVO.setGoodsName(goodsName);
-                }
-                if (goodsIntro.length() > 30) {
-                    goodsIntro = goodsIntro.substring(0, 30) + "...";
-                    xxMallSearchGoodsVO.setGoodsIntro(goodsIntro);
-                }
-            }
-
         }
-        PageResult pageResult = new PageResult(xxMallSearchGoodsVOS, total, 1, 1);
+        PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
 

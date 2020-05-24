@@ -42,7 +42,7 @@ public class XxMallGoodsController {
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
         request.setAttribute("path", "newbee_mall_goods");
-        return "admin/newbee_mall_goods";
+        return "admin/xx_mall_goods";
     }
 
 
@@ -210,13 +210,15 @@ public class XxMallGoodsController {
     /**
      * 搜索
      */
-    @RequestMapping(value = "/goods/search" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/goods/search", method = RequestMethod.GET)
     @ResponseBody
-    public Result searchResult(@RequestParam("id") Long id) {
-        if(id == null) {
+    public Result searchResult(@RequestParam Map<String, Object> params) {
+        if (params.get("id") == null) {
             return ResultGenerator.genFailResult(ServiceResultEnum.TERM_IS_EMPTY.getResult());
         }
-        PageResult goods = xxMallGoodsService.getXxMallGoodsPageById(id);
+        Long id = Long.parseLong(params.get("id").toString());
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        PageResult goods = xxMallGoodsService.getXxMallGoodsPageById(pageUtil, id);
         if (goods == null) {
             return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
         }

@@ -223,19 +223,21 @@ function searchGoods() {
     $('#goodsModal').modal('show');
 }
 
-// function saveButton() {
-//     var id = $('#goodsId').val();
-//     if (isNull(goodsName) && isNull(id)) {
-//         swal("请输入商品ID", {
-//             icon: "error",
-//         });
-//         return;
-//     }
-//     $("#jqGrid").jqGrid('setGridParam', {
-//         url: "/goods/search",
-//         postData: {'id': id }, //发送数据
-//         page: 1
-//     }).trigger("reloadGrid"); //重新载入
-// }
+
+$('#saveButton').click(function () {
+    var id = $('#goodsId').val();
+    if (isNull(id)) {
+        swal("请输入商品ID", {
+            icon: "error",
+        });
+        return;
+    }
+    $("#jqGrid").jqGrid('setGridParam', {
+        url: "/admin/goods/search",
+        postData: {'id': id }, //发送数据
+        page: 1
+    }).trigger("reloadGrid"); //重新载入
+    $('#goodsModal').modal('hide');
+})
 
 

@@ -1,5 +1,7 @@
 package ltd.xx.mall.util;
 
+import lombok.Data;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import java.util.Map;
  * @email 2449207463@qq.com
  * @link https://github.com/newbee-ltd
  */
+@Data
 public class PageQueryUtil extends LinkedHashMap<String, Object> {
     //当前页码
     private int page;
@@ -29,21 +32,6 @@ public class PageQueryUtil extends LinkedHashMap<String, Object> {
     }
 
 
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
 
     @Override
     public String toString() {
