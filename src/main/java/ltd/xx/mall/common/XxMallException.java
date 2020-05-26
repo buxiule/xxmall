@@ -1,11 +1,11 @@
 package ltd.xx.mall.common;
 
-public class NewBeeMallException extends RuntimeException {
+public class XxMallException extends RuntimeException {
 
-    public NewBeeMallException() {
+    public XxMallException() {
     }
 
-    public NewBeeMallException(String message) {
+    public XxMallException(String message) {
         super(message);
     }
 
@@ -15,7 +15,7 @@ public class NewBeeMallException extends RuntimeException {
      * @param message
      */
     public static void fail(String message) {
-        throw new NewBeeMallException(message);
+        throw new XxMallException(message);
     }
 
 }

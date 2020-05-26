@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-商品详情','detail')">
+<head th:replace="mall/header::head-fragment('熊熊官方商城-商品详情','detail')">
 </head>
 <body>
 <header th:replace="mall/header::header-fragment"></header>
@@ -15,9 +15,9 @@
             <nav class="fr">
                 <li><a href="##">概述</a></li>
                 <li>|</li>
-                <li><a href="##">详情</a></li>
+                <li><a href="#GoodsDetail">详情</a></li>
                 <li>|</li>
-                <li><a href="##">用户评价</a></li>
+                <li><a href="##">请期待</a></li>
                 <div class="clear"></div>
             </nav>
             <div class="clear"></div>
@@ -47,19 +47,18 @@
             <div class="tb-extra ml20" id="J_tbExtra">
                 <dl>
                     <dt>承诺</dt>
-                    <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
+                    <dd><a class="J_Cont" title="官方直营，正品保障。" href="#"
                            target="_blank"><img th:src="@{/mall/image/7d.jpg}">7天无理由</a></dd>
                 </dl>
                 <dl>
                     <dt>支付</dt>
                     <dd><a href="##" target="_blank"><img th:src="@{/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
                                                                                                      target="_blank"><img
-                            th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
-                            th:src="@{/mall/image/ji.png}">集分宝</a></dd>
+                            th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"></a></dd>
                 </dl>
                 <dl>
                     <dt>支持</dt>
-                    <dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
+                    <dd>官方♻️回收，抵扣金额<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
                 </dl>
 
             </div>
@@ -67,7 +66,7 @@
         <div class="clear"></div>
     </div>
     <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
-    <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
+    <div class="goods mt20 w clearfix" id="GoodsDetail" th:utext="${goodsDetail.goodsDetailContent}">
     </div>
 </div>
 

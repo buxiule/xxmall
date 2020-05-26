@@ -4,7 +4,7 @@ import ltd.xx.mall.common.Constants;
 import ltd.xx.mall.common.IndexConfigTypeEnum;
 import ltd.xx.mall.controller.vo.NewBeeMallIndexCarouselVO;
 import ltd.xx.mall.controller.vo.NewBeeMallIndexCategoryVO;
-import ltd.xx.mall.controller.vo.NewBeeMallIndexConfigGoodsVO;
+import ltd.xx.mall.controller.vo.XxMallIndexConfigGoodsVO;
 import ltd.xx.mall.service.XxMallCarouselService;
 import ltd.xx.mall.service.XxMallCategoryService;
 import ltd.xx.mall.service.NewBeeMallIndexConfigService;
@@ -35,9 +35,9 @@ public class IndexController {
             return "error/error_5xx";
         }
         List<NewBeeMallIndexCarouselVO> carousels = xxMallCarouselService.getCarouselsForIndex(Constants.INDEX_CAROUSEL_NUMBER);
-        List<NewBeeMallIndexConfigGoodsVO> hotGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
-        List<NewBeeMallIndexConfigGoodsVO> newGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_GOODS_NEW_NUMBER);
-        List<NewBeeMallIndexConfigGoodsVO> recommendGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
+        List<XxMallIndexConfigGoodsVO> hotGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
+        List<XxMallIndexConfigGoodsVO> newGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_GOODS_NEW_NUMBER);
+        List<XxMallIndexConfigGoodsVO> recommendGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
         request.setAttribute("categories", categories);//分类数据
         request.setAttribute("carousels", carousels);//轮播图
         request.setAttribute("hotGoodses", hotGoodses);//热销商品

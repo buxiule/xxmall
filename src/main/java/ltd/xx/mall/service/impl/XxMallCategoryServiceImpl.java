@@ -1,7 +1,7 @@
 package ltd.xx.mall.service.impl;
 
 import ltd.xx.mall.common.Constants;
-import ltd.xx.mall.common.NewBeeMallCategoryLevelEnum;
+import ltd.xx.mall.common.XxCategoryLevelEnum;
 import ltd.xx.mall.common.ServiceResultEnum;
 import ltd.xx.mall.controller.vo.NewBeeMallIndexCategoryVO;
 import ltd.xx.mall.controller.vo.SearchPageCategoryVO;
@@ -85,15 +85,15 @@ public class XxMallCategoryServiceImpl implements XxMallCategoryService {
     public List<NewBeeMallIndexCategoryVO> getCategoriesForIndex() {
         List<NewBeeMallIndexCategoryVO> newBeeMallIndexCategoryVOS = new ArrayList<>();
         //获取一级分类的固定数量的数据
-        List<GoodsCategory> firstLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel(), Constants.INDEX_CATEGORY_NUMBER);
+        List<GoodsCategory> firstLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), XxCategoryLevelEnum.LEVEL_ONE.getLevel(), Constants.INDEX_CATEGORY_NUMBER);
         if (!CollectionUtils.isEmpty(firstLevelCategories)) {
             List<Long> firstLevelCategoryIds = firstLevelCategories.stream().map(GoodsCategory::getCategoryId).collect(Collectors.toList());
             //获取二级分类的数据
-            List<GoodsCategory> secondLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(firstLevelCategoryIds, NewBeeMallCategoryLevelEnum.LEVEL_TWO.getLevel(), 0);
+            List<GoodsCategory> secondLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(firstLevelCategoryIds, XxCategoryLevelEnum.LEVEL_TWO.getLevel(), 0);
             if (!CollectionUtils.isEmpty(secondLevelCategories)) {
                 List<Long> secondLevelCategoryIds = secondLevelCategories.stream().map(GoodsCategory::getCategoryId).collect(Collectors.toList());
                 //获取三级分类的数据
-                List<GoodsCategory> thirdLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(secondLevelCategoryIds, NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel(), 0);
+                List<GoodsCategory> thirdLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(secondLevelCategoryIds, XxCategoryLevelEnum.LEVEL_THREE.getLevel(), 0);
                 if (!CollectionUtils.isEmpty(thirdLevelCategories)) {
                     //根据 parentId 将 thirdLevelCategories 分组
                     Map<Long, List<GoodsCategory>> thirdLevelCategoryMap = thirdLevelCategories.stream().collect(groupingBy(GoodsCategory::getParentId));
@@ -138,12 +138,12 @@ public class XxMallCategoryServiceImpl implements XxMallCategoryService {
     public SearchPageCategoryVO getCategoriesForSearch(Long categoryId) {
         SearchPageCategoryVO searchPageCategoryVO = new SearchPageCategoryVO();
         GoodsCategory thirdLevelGoodsCategory = goodsCategoryMapper.selectByPrimaryKey(categoryId);
-        if (thirdLevelGoodsCategory != null && thirdLevelGoodsCategory.getCategoryLevel() == NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+        if (thirdLevelGoodsCategory != null && thirdLevelGoodsCategory.getCategoryLevel() == XxCategoryLevelEnum.LEVEL_THREE.getLevel()) {
             //获取当前三级分类的二级分类
             GoodsCategory secondLevelGoodsCategory = goodsCategoryMapper.selectByPrimaryKey(thirdLevelGoodsCategory.getParentId());
-            if (secondLevelGoodsCategory != null && secondLevelGoodsCategory.getCategoryLevel() == NewBeeMallCategoryLevelEnum.LEVEL_TWO.getLevel()) {
+            if (secondLevelGoodsCategory != null && secondLevelGoodsCategory.getCategoryLevel() == XxCategoryLevelEnum.LEVEL_TWO.getLevel()) {
                 //获取当前二级分类下的三级分类List
-                List<GoodsCategory> thirdLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelGoodsCategory.getCategoryId()), NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel(), Constants.SEARCH_CATEGORY_NUMBER);
+                List<GoodsCategory> thirdLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelGoodsCategory.getCategoryId()), XxCategoryLevelEnum.LEVEL_THREE.getLevel(), Constants.SEARCH_CATEGORY_NUMBER);
                 searchPageCategoryVO.setCurrentCategoryName(thirdLevelGoodsCategory.getCategoryName());
                 searchPageCategoryVO.setSecondLevelCategoryName(secondLevelGoodsCategory.getCategoryName());
                 searchPageCategoryVO.setThirdLevelCategoryList(thirdLevelCategories);

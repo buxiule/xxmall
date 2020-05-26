@@ -1,7 +1,7 @@
 package ltd.xx.mall.controller.admin;
 
 import ltd.xx.mall.common.Constants;
-import ltd.xx.mall.common.NewBeeMallCategoryLevelEnum;
+import ltd.xx.mall.common.XxCategoryLevelEnum;
 import ltd.xx.mall.common.ServiceResultEnum;
 import ltd.xx.mall.entity.GoodsCategory;
 import ltd.xx.mall.entity.XxMallGoods;
@@ -41,7 +41,7 @@ public class XxMallGoodsController {
 
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_goods");
+        request.setAttribute("path", "xx_mall_goods");
         return "admin/xx_mall_goods";
     }
 
@@ -50,13 +50,13 @@ public class XxMallGoodsController {
     public String edit(HttpServletRequest request) {
         request.setAttribute("path", "edit");
         //查询所有的一级分类
-        List<GoodsCategory> firstLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel());
+        List<GoodsCategory> firstLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), XxCategoryLevelEnum.LEVEL_ONE.getLevel());
         if (!CollectionUtils.isEmpty(firstLevelCategories)) {
             //查询一级分类列表中第一个实体的所有二级分类
-            List<GoodsCategory> secondLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCategoryId()), NewBeeMallCategoryLevelEnum.LEVEL_TWO.getLevel());
+            List<GoodsCategory> secondLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCategoryId()), XxCategoryLevelEnum.LEVEL_TWO.getLevel());
             if (!CollectionUtils.isEmpty(secondLevelCategories)) {
                 //查询二级分类列表中第一个实体的所有三级分类
-                List<GoodsCategory> thirdLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCategoryId()), NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel());
+                List<GoodsCategory> thirdLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCategoryId()), XxCategoryLevelEnum.LEVEL_THREE.getLevel());
                 request.setAttribute("firstLevelCategories", firstLevelCategories);
                 request.setAttribute("secondLevelCategories", secondLevelCategories);
                 request.setAttribute("thirdLevelCategories", thirdLevelCategories);
@@ -82,16 +82,16 @@ public class XxMallGoodsController {
                 //有分类字段则查询相关分类数据返回给前端以供分类的三级联动显示
                 GoodsCategory currentGoodsCategory = xxMallCategoryService.getGoodsCategoryById(xxMallGoods.getGoodsCategoryId());
                 //商品表中存储的分类id字段为三级分类的id，不为三级分类则是错误数据
-                if (currentGoodsCategory != null && currentGoodsCategory.getCategoryLevel() == NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+                if (currentGoodsCategory != null && currentGoodsCategory.getCategoryLevel() == XxCategoryLevelEnum.LEVEL_THREE.getLevel()) {
                     //查询所有的一级分类
-                    List<GoodsCategory> firstLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel());
+                    List<GoodsCategory> firstLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), XxCategoryLevelEnum.LEVEL_ONE.getLevel());
                     //根据parentId查询当前parentId下所有的三级分类
-                    List<GoodsCategory> thirdLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(currentGoodsCategory.getParentId()), NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel());
+                    List<GoodsCategory> thirdLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(currentGoodsCategory.getParentId()), XxCategoryLevelEnum.LEVEL_THREE.getLevel());
                     //查询当前三级分类的父级二级分类
                     GoodsCategory secondCategory = xxMallCategoryService.getGoodsCategoryById(currentGoodsCategory.getParentId());
                     if (secondCategory != null) {
                         //根据parentId查询当前parentId下所有的二级分类
-                        List<GoodsCategory> secondLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondCategory.getParentId()), NewBeeMallCategoryLevelEnum.LEVEL_TWO.getLevel());
+                        List<GoodsCategory> secondLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondCategory.getParentId()), XxCategoryLevelEnum.LEVEL_TWO.getLevel());
                         //查询当前二级分类的父级一级分类
                         GoodsCategory firestCategory = xxMallCategoryService.getGoodsCategoryById(secondCategory.getParentId());
                         if (firestCategory != null) {
@@ -109,13 +109,13 @@ public class XxMallGoodsController {
         }
         if (xxMallGoods.getGoodsCategoryId() == 0) {
             //查询所有的一级分类
-            List<GoodsCategory> firstLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel());
+            List<GoodsCategory> firstLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), XxCategoryLevelEnum.LEVEL_ONE.getLevel());
             if (!CollectionUtils.isEmpty(firstLevelCategories)) {
                 //查询一级分类列表中第一个实体的所有二级分类
-                List<GoodsCategory> secondLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCategoryId()), NewBeeMallCategoryLevelEnum.LEVEL_TWO.getLevel());
+                List<GoodsCategory> secondLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCategoryId()), XxCategoryLevelEnum.LEVEL_TWO.getLevel());
                 if (!CollectionUtils.isEmpty(secondLevelCategories)) {
                     //查询二级分类列表中第一个实体的所有三级分类
-                    List<GoodsCategory> thirdLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCategoryId()), NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel());
+                    List<GoodsCategory> thirdLevelCategories = xxMallCategoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCategoryId()), XxCategoryLevelEnum.LEVEL_THREE.getLevel());
                     request.setAttribute("firstLevelCategories", firstLevelCategories);
                     request.setAttribute("secondLevelCategories", secondLevelCategories);
                     request.setAttribute("thirdLevelCategories", thirdLevelCategories);

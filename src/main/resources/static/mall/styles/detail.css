@@ -1,8 +1,9 @@
 /*detail*/
+
 #detail .dc {
     width: 100%;
     height: 58px;
-    background: #f0f0f0;
+    background: bisque;
 }
 
 #detail .dc .content {
@@ -80,7 +81,7 @@
 
 #detail .intro .right {
     width: 620px;
-    background: #f8f8f8;
+    background: #eee8d5;
     padding-bottom: 50px;
 }
 

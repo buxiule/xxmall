@@ -7,7 +7,7 @@ package ltd.xx.mall.common;
  * @link https://github.com/newbee-ltd
  * @apiNote 分类级别
  */
-public enum NewBeeMallCategoryLevelEnum {
+public enum XxCategoryLevelEnum {
 
     DEFAULT(0, "ERROR"),
     LEVEL_ONE(1, "一级分类"),
@@ -18,15 +18,15 @@ public enum NewBeeMallCategoryLevelEnum {
 
     private String name;
 
-    NewBeeMallCategoryLevelEnum(int level, String name) {
+    XxCategoryLevelEnum(int level, String name) {
         this.level = level;
         this.name = name;
     }
 
-    public static NewBeeMallCategoryLevelEnum getNewBeeMallOrderStatusEnumByLevel(int level) {
-        for (NewBeeMallCategoryLevelEnum newBeeMallCategoryLevelEnum : NewBeeMallCategoryLevelEnum.values()) {
-            if (newBeeMallCategoryLevelEnum.getLevel() == level) {
-                return newBeeMallCategoryLevelEnum;
+    public static XxCategoryLevelEnum getNewBeeMallOrderStatusEnumByLevel(int level) {
+        for (XxCategoryLevelEnum xxCategoryLevelEnum : XxCategoryLevelEnum.values()) {
+            if (xxCategoryLevelEnum.getLevel() == level) {
+                return xxCategoryLevelEnum;
             }
         }
         return DEFAULT;

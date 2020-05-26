@@ -1,11 +1,12 @@
 package ltd.xx.mall.controller.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * 首页配置商品VO
+ * 商品详情页VO
  */
-public class NewBeeMallIndexConfigGoodsVO implements Serializable {
+public class XxMallGoodsDetailVO implements Serializable {
 
     private Long goodsId;
 
@@ -15,9 +16,13 @@ public class NewBeeMallIndexConfigGoodsVO implements Serializable {
 
     private String goodsCoverImg;
 
+    private String[] goodsCarouselList;
+
     private Integer sellingPrice;
 
-    private String tag;
+    private Integer originalPrice;
+
+    private String goodsDetailContent;
 
     public Long getGoodsId() {
         return goodsId;
@@ -59,11 +64,27 @@ public class NewBeeMallIndexConfigGoodsVO implements Serializable {
         this.sellingPrice = sellingPrice;
     }
 
-    public String getTag() {
-        return tag;
+    public Integer getOriginalPrice() {
+        return originalPrice;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setOriginalPrice(Integer originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public String getGoodsDetailContent() {
+        return goodsDetailContent;
+    }
+
+    public void setGoodsDetailContent(String goodsDetailContent) {
+        this.goodsDetailContent = goodsDetailContent;
+    }
+
+    public String[] getGoodsCarouselList() {
+        return goodsCarouselList;
+    }
+
+    public void setGoodsCarouselList(String[] goodsCarouselList) {
+        this.goodsCarouselList = goodsCarouselList;
     }
 }

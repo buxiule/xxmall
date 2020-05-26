@@ -8,7 +8,7 @@ $(function () {
             }
         }
     });
-});
+});  //  键盘回车触发
 
 function search() {
     var q = $('#keyword').val();

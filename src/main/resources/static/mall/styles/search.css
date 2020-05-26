@@ -12,7 +12,7 @@
 }
 .classify .category .category_bar .fm a {
   text-decoration: none;
-  background: #fff;
+  background: #e2e2e2;
 }
 .classify .category .category_bar .c,
 .classify .category .category_bar .b {
@@ -41,7 +41,7 @@
   width: 400px;
   padding: 10px 0;
   border: 1px solid #1baeae;
-  background: #fff;
+  background: #e2e2e2;
   z-index: 20;
   display: none;
 }
@@ -58,11 +58,11 @@
 }
 .classify .category .category_bar .b:hover .qqq {
   border: 1px solid #1baeae;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #e2e2e2;
 }
 .classify .category .category_bar .c:hover .qqq {
   border: 1px solid #1baeae;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #e2e2e2;
 }
 .classify .category .category_bar .a {
   font-size: 20px;
@@ -96,7 +96,7 @@
   padding: 0 30px;
   flex-shrink: 0;
   cursor: pointer;
-  border-left: 1px solid #e0e0e0;
+  border-left: 1px solid #e2e2e2;
   transition: color 0.2s;
 }
 .sort .list div:nth-child(1) {
@@ -117,7 +117,7 @@
   float: left;
   width: 230px;
   height: 339px;
-  background: #fafafa;
+  background: #e2e2e2;
   cursor: pointer;
   margin-bottom: 16px;
   margin-top: 4px;
@@ -160,7 +160,7 @@
   line-height: 14px;
   margin: 18px 0;
   font-size: 12px;
-  color: #b0b0b0;
+  color: #e2e2e2;
   text-align: center;
   padding: 0 8px 0 8px;
 }
@@ -186,7 +186,7 @@
 .goods_item .pages .page_wrap .page_span1 .active {
   border: 0;
   color: #1baeae;
-  background: #fff;
+  background: #e2e2e2;
 }
 .goods_item .pages .page_wrap .page_span1 a {
   font-size: 14px;
@@ -202,7 +202,7 @@
 }
 .goods_item .pages .page_wrap .page_span1 a:nth-child(1) {
   color: #ccc;
-  background: #fff;
+  background: #e2e2e2;
 }
 .goods_item .pages .page_wrap .page_span2 {
   float: right;

@@ -1,7 +1,7 @@
 package ltd.xx.mall.controller.mall;
 
 import ltd.xx.mall.common.Constants;
-import ltd.xx.mall.common.NewBeeMallException;
+import ltd.xx.mall.common.XxMallException;
 import ltd.xx.mall.common.ServiceResultEnum;
 import ltd.xx.mall.controller.vo.NewBeeMallOrderDetailVO;
 import ltd.xx.mall.controller.vo.XxMallShoppingCartItemVO;
@@ -63,11 +63,11 @@ public class OrderController {
         List<XxMallShoppingCartItemVO> myShoppingCartItems = xxMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (StringUtils.isEmpty(user.getAddress().trim())) {
             //无收货地址
-            NewBeeMallException.fail(ServiceResultEnum.NULL_ADDRESS_ERROR.getResult());
+            XxMallException.fail(ServiceResultEnum.NULL_ADDRESS_ERROR.getResult());
         }
         if (CollectionUtils.isEmpty(myShoppingCartItems)) {
             //购物车中无数据则跳转至错误页
-            NewBeeMallException.fail(ServiceResultEnum.SHOPPING_ITEM_ERROR.getResult());
+            XxMallException.fail(ServiceResultEnum.SHOPPING_ITEM_ERROR.getResult());
         }
         //保存订单并返回订单号
         String saveOrderResult = newBeeMallOrderService.saveOrder(user, myShoppingCartItems);

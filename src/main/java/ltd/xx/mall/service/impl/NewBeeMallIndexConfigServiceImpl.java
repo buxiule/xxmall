@@ -1,7 +1,7 @@
 package ltd.xx.mall.service.impl;
 
 import ltd.xx.mall.common.ServiceResultEnum;
-import ltd.xx.mall.controller.vo.NewBeeMallIndexConfigGoodsVO;
+import ltd.xx.mall.controller.vo.XxMallIndexConfigGoodsVO;
 import ltd.xx.mall.dao.IndexConfigMapper;
 import ltd.xx.mall.dao.XxMallGoodsMapper;
 import ltd.xx.mall.entity.IndexConfig;
@@ -63,29 +63,29 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
     }
 
     @Override
-    public List<NewBeeMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number) {
-        List<NewBeeMallIndexConfigGoodsVO> newBeeMallIndexConfigGoodsVOS = new ArrayList<>(number);
+    public List<XxMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number) {
+        List<XxMallIndexConfigGoodsVO> xxMallIndexConfigGoodsVOS = new ArrayList<>(number);
         List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigsByTypeAndNum(configType, number);
         if (!CollectionUtils.isEmpty(indexConfigs)) {
             //取出所有的goodsId
             List<Long> goodsIds = indexConfigs.stream().map(IndexConfig::getGoodsId).collect(Collectors.toList());
             List<XxMallGoods> newBeeMallGoods = goodsMapper.selectByPrimaryKeys(goodsIds);
-            newBeeMallIndexConfigGoodsVOS = BeanUtil.copyList(newBeeMallGoods, NewBeeMallIndexConfigGoodsVO.class);
-            for (NewBeeMallIndexConfigGoodsVO newBeeMallIndexConfigGoodsVO : newBeeMallIndexConfigGoodsVOS) {
-                String goodsName = newBeeMallIndexConfigGoodsVO.getGoodsName();
-                String goodsIntro = newBeeMallIndexConfigGoodsVO.getGoodsIntro();
+            xxMallIndexConfigGoodsVOS = BeanUtil.copyList(newBeeMallGoods, XxMallIndexConfigGoodsVO.class);
+            for (XxMallIndexConfigGoodsVO xxMallIndexConfigGoodsVO : xxMallIndexConfigGoodsVOS) {
+                String goodsName = xxMallIndexConfigGoodsVO.getGoodsName();
+                String goodsIntro = xxMallIndexConfigGoodsVO.getGoodsIntro();
                 // 字符串过长导致文字超出的问题
                 if (goodsName.length() > 30) {
                     goodsName = goodsName.substring(0, 30) + "...";
-                    newBeeMallIndexConfigGoodsVO.setGoodsName(goodsName);
+                    xxMallIndexConfigGoodsVO.setGoodsName(goodsName);
                 }
                 if (goodsIntro.length() > 22) {
                     goodsIntro = goodsIntro.substring(0, 22) + "...";
-                    newBeeMallIndexConfigGoodsVO.setGoodsIntro(goodsIntro);
+                    xxMallIndexConfigGoodsVO.setGoodsIntro(goodsIntro);
                 }
             }
         }
-        return newBeeMallIndexConfigGoodsVOS;
+        return xxMallIndexConfigGoodsVOS;
     }
 
     @Override

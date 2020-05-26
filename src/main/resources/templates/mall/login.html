@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>NewBee商城-登录</title>
+    <title>熊熊商城-登录</title>
     <link rel="stylesheet" th:href="@{mall/css/common.css}">
     <link rel="stylesheet" th:href="@{mall/styles/login.css}">
     <link rel="stylesheet" th:href="@{mall/styles/header.css}">
@@ -11,7 +11,7 @@
 <body>
 <div class="top center">
     <div class="logo center">
-        <a href="./index.html" target="_blank"><img src="mall/image/login-logo-2.png" alt=""></a>
+        <a href="./index.html" target="_blank">熊熊🐻商城主页</a>
     </div>
 </div>
 <div class="form center">
@@ -58,14 +58,14 @@
     function login() {
         var loginName = $("#loginName").val();
         if (!validPhoneNumber(loginName)) {
-            swal('请输入正确的登录名(即手机号)', {
+            swal('请输入正确的登录名', {
                 icon: "error",
             });
             return false;
         }
         var password = $("#password").val();
         if (!validPassword(password)) {
-            swal('请输入正确的密码格式(6-20位字符和数字组合)', {
+            swal('请输入正确的密码格式', {
                 icon: "error",
             });
             return false;

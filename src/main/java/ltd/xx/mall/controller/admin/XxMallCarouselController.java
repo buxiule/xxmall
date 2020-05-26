@@ -16,22 +16,23 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- */
+*   @Description
+*   @Param
+*   @Return
+*   @Author
+*   @Date
+*/
 @Controller
 @RequestMapping("/admin")
-public class NewBeeMallCarouselController {
+public class XxMallCarouselController {
 
     @Resource
     XxMallCarouselService xxMallCarouselService;
 
     @GetMapping("/carousels")
     public String carouselPage(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_carousel");
-        return "admin/newbee_mall_carousel";
+        request.setAttribute("path", "xx_mall_carousel");
+        return "admin/xx_mall_carousel";
     }
 
     /**

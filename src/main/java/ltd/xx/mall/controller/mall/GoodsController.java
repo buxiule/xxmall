@@ -1,7 +1,7 @@
 package ltd.xx.mall.controller.mall;
 
 import ltd.xx.mall.common.Constants;
-import ltd.xx.mall.controller.vo.NewBeeMallGoodsDetailVO;
+import ltd.xx.mall.controller.vo.XxMallGoodsDetailVO;
 import ltd.xx.mall.controller.vo.SearchPageCategoryVO;
 import ltd.xx.mall.entity.XxMallGoods;
 import ltd.xx.mall.service.XxMallCategoryService;
@@ -67,7 +67,7 @@ public class GoodsController {
         if (goods == null) {
             return "error/error_404";
         }
-        NewBeeMallGoodsDetailVO goodsDetailVO = new NewBeeMallGoodsDetailVO();
+        XxMallGoodsDetailVO goodsDetailVO = new XxMallGoodsDetailVO();
         BeanUtil.copyProperties(goods, goodsDetailVO);
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
