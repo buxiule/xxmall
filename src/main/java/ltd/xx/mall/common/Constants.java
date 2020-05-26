@@ -1,12 +1,12 @@
 package ltd.xx.mall.common;
 
 /**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- * @apiNote 常量配置
- */
+*   @Description 常量配置
+*   @Param
+*   @Return
+*   @Author
+*   @Date
+*/
 public class Constants {
     //public final static String FILE_UPLOAD_DIC = "/opt/image/upload/";//上传文件的默认url前缀，根据部署设置自行修改
     public final static String FILE_UPLOAD_DIC = "/Users/heyichi/Downloads/upload/";//上传文件的默认url前缀，根据部署设置自行修改
@@ -27,7 +27,7 @@ public class Constants {
 
     public final static String MALL_VERIFY_CODE_KEY = "mallVerifyCode";//验证码key
 
-    public final static String MALL_USER_SESSION_KEY = "newBeeMallUser";//session中user的key
+    public final static String MALL_USER_SESSION_KEY = "xxMallUser";//session中user的key
 
     public final static int GOODS_SEARCH_PAGE_LIMIT = 10;//搜索分页的默认条数(每页10条)
 

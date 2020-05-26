@@ -1,4 +1,4 @@
-package ltd.newbee.mall.entity;
+package ltd.xx.mall.entity;
 
 import java.util.Date;
 

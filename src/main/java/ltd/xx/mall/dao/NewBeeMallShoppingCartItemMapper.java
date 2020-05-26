@@ -1,6 +1,6 @@
-package ltd.newbee.mall.dao;
+package ltd.xx.mall.dao;
 
-import ltd.newbee.mall.entity.NewBeeMallShoppingCartItem;
+import ltd.xx.mall.entity.NewBeeMallShoppingCartItem;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
