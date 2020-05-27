@@ -1,7 +1,7 @@
 package ltd.xx.mall.interceptor;
 
 import ltd.xx.mall.common.Constants;
-import ltd.xx.mall.controller.vo.NewBeeMallUserVO;
+import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.dao.XxMallShoppingCartItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,10 +30,10 @@ public class NewBeeMallCartNumberInterceptor implements HandlerInterceptor {
         //购物车中的数量会更改，但是在这些接口中并没有对session中的数据做修改，这里统一处理一下
         if (null != request.getSession() && null != request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY)) {
             //如果当前为登陆状态，就查询数据库并设置购物车中的数量值
-            NewBeeMallUserVO newBeeMallUserVO = (NewBeeMallUserVO) request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY);
+            XxMallUserVO xxMallUserVO = (XxMallUserVO) request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY);
             //设置购物车中的数量
-            newBeeMallUserVO.setShopCartItemCount(xxMallShoppingCartItemMapper.selectCountByUserId(newBeeMallUserVO.getUserId()));
-            request.getSession().setAttribute(Constants.MALL_USER_SESSION_KEY, newBeeMallUserVO);
+            xxMallUserVO.setShopCartItemCount(xxMallShoppingCartItemMapper.selectCountByUserId(xxMallUserVO.getUserId()));
+            request.getSession().setAttribute(Constants.MALL_USER_SESSION_KEY, xxMallUserVO);
         }
         return true;
     }

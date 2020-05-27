@@ -11,11 +11,11 @@
 </head>
 <body>
 
-<div id="cart">
-    <div class="banner_x center">
+<div id="cart" style="background: #eee8d5">
+    <div class="banner_x center" style="background: #e0a800" >
         <a th:href="@{/index}" target="_blank">
             <div class="logo fl">
-                <img src="../../static/mall/image/Xx-logo-3.png"/>
+                <h4>返回商城首页</h4>
             </div>
         </a>
 
@@ -24,7 +24,7 @@
         <div class="clear"></div>
     </div>
     <div class="cart_line"></div>
-    <div class="cart_bg">
+    <div class="cart_bg" style="background: #eee8d5">
         <th:block th:if="${#lists.isEmpty(myShoppingCartItems)}">
             <div class="list center">
                 <!-- todo 无购物项时 换背景图 -->

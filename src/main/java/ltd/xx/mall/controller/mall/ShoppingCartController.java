@@ -3,7 +3,7 @@ package ltd.xx.mall.controller.mall;
 import ltd.xx.mall.common.Constants;
 import ltd.xx.mall.common.ServiceResultEnum;
 import ltd.xx.mall.controller.vo.XxMallShoppingCartItemVO;
-import ltd.xx.mall.controller.vo.NewBeeMallUserVO;
+import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.entity.XxMallShoppingCartItem;
 import ltd.xx.mall.service.XxMallShoppingCartService;
 import ltd.xx.mall.util.Result;
@@ -26,7 +26,7 @@ public class ShoppingCartController {
     @GetMapping("/shop-cart")
     public String cartListPage(HttpServletRequest request,
                                HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         int itemsTotal = 0;
         int priceTotal = 0;
         List<XxMallShoppingCartItemVO> myShoppingCartItems = xxMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
@@ -54,7 +54,7 @@ public class ShoppingCartController {
     @ResponseBody
     public Result saveNewBeeMallShoppingCartItem(@RequestBody XxMallShoppingCartItem xxMallShoppingCartItem,
                                                  HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         xxMallShoppingCartItem.setUserId(user.getUserId());
         //todo 判断数量
         String saveResult = xxMallShoppingCartService.saveXxMallCartItem(xxMallShoppingCartItem);
@@ -70,7 +70,7 @@ public class ShoppingCartController {
     @ResponseBody
     public Result updateNewBeeMallShoppingCartItem(@RequestBody XxMallShoppingCartItem xxMallShoppingCartItem,
                                                    HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         xxMallShoppingCartItem.setUserId(user.getUserId());
         //todo 判断数量
         String updateResult = xxMallShoppingCartService.updateXxMallCartItem(xxMallShoppingCartItem);
@@ -86,7 +86,7 @@ public class ShoppingCartController {
     @ResponseBody
     public Result updateNewBeeMallShoppingCartItem(@PathVariable("newBeeMallShoppingCartItemId") Long newBeeMallShoppingCartItemId,
                                                    HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         Boolean deleteResult = xxMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId);
         //删除成功
         if (deleteResult) {
@@ -100,7 +100,7 @@ public class ShoppingCartController {
     public String settlePage(HttpServletRequest request,
                              HttpSession httpSession) {
         int priceTotal = 0;
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         List<XxMallShoppingCartItemVO> myShoppingCartItems = xxMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (CollectionUtils.isEmpty(myShoppingCartItems)) {
             //无数据则不跳转至结算页

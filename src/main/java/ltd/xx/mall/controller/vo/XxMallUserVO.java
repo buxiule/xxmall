@@ -2,7 +2,7 @@ package ltd.xx.mall.controller.vo;
 
 import java.io.Serializable;
 
-public class NewBeeMallUserVO implements Serializable {
+public class XxMallUserVO implements Serializable {
 
     private Long userId;
 

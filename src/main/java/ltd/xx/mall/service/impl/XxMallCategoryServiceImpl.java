@@ -3,7 +3,7 @@ package ltd.xx.mall.service.impl;
 import ltd.xx.mall.common.Constants;
 import ltd.xx.mall.common.XxCategoryLevelEnum;
 import ltd.xx.mall.common.ServiceResultEnum;
-import ltd.xx.mall.controller.vo.NewBeeMallIndexCategoryVO;
+import ltd.xx.mall.controller.vo.XxMallIndexOneLevelCategoryVO;
 import ltd.xx.mall.controller.vo.SearchPageCategoryVO;
 import ltd.xx.mall.controller.vo.SecondLevelCategoryVO;
 import ltd.xx.mall.controller.vo.ThirdLevelCategoryVO;
@@ -82,8 +82,8 @@ public class XxMallCategoryServiceImpl implements XxMallCategoryService {
     }
 
     @Override
-    public List<NewBeeMallIndexCategoryVO> getCategoriesForIndex() {
-        List<NewBeeMallIndexCategoryVO> newBeeMallIndexCategoryVOS = new ArrayList<>();
+    public List<XxMallIndexOneLevelCategoryVO> getCategoriesForIndex() {
+        List<XxMallIndexOneLevelCategoryVO> xxMallIndexOneLevelCategoryVOS = new ArrayList<>();
         //获取一级分类的固定数量的数据
         List<GoodsCategory> firstLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), XxCategoryLevelEnum.LEVEL_ONE.getLevel(), Constants.INDEX_CATEGORY_NUMBER);
         if (!CollectionUtils.isEmpty(firstLevelCategories)) {
@@ -94,8 +94,9 @@ public class XxMallCategoryServiceImpl implements XxMallCategoryService {
                 List<Long> secondLevelCategoryIds = secondLevelCategories.stream().map(GoodsCategory::getCategoryId).collect(Collectors.toList());
                 //获取三级分类的数据
                 List<GoodsCategory> thirdLevelCategories = goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(secondLevelCategoryIds, XxCategoryLevelEnum.LEVEL_THREE.getLevel(), 0);
+                //必须要有三级分类
                 if (!CollectionUtils.isEmpty(thirdLevelCategories)) {
-                    //根据 parentId 将 thirdLevelCategories 分组
+                    //根据 parentId 将 thirdLevelCategories 按照二级分类分组 流操作
                     Map<Long, List<GoodsCategory>> thirdLevelCategoryMap = thirdLevelCategories.stream().collect(groupingBy(GoodsCategory::getParentId));
                     List<SecondLevelCategoryVO> secondLevelCategoryVOS = new ArrayList<>();
                     //处理二级分类
@@ -106,29 +107,30 @@ public class XxMallCategoryServiceImpl implements XxMallCategoryService {
                         if (thirdLevelCategoryMap.containsKey(secondLevelCategory.getCategoryId())) {
                             //根据二级分类的id取出thirdLevelCategoryMap分组中的三级分类list
                             List<GoodsCategory> tempGoodsCategories = thirdLevelCategoryMap.get(secondLevelCategory.getCategoryId());
+                            //.copyList（A，B）将ListA的单个类型转换成B类型 并生成一个B类型的List
                             secondLevelCategoryVO.setThirdLevelCategoryVOS((BeanUtil.copyList(tempGoodsCategories, ThirdLevelCategoryVO.class)));
                             secondLevelCategoryVOS.add(secondLevelCategoryVO);
                         }
                     }
-                    //处理一级分类
+                    //处理一级分类 同上处理
                     if (!CollectionUtils.isEmpty(secondLevelCategoryVOS)) {
                         //根据 parentId 将 thirdLevelCategories 分组
                         Map<Long, List<SecondLevelCategoryVO>> secondLevelCategoryVOMap = secondLevelCategoryVOS.stream().collect(groupingBy(SecondLevelCategoryVO::getParentId));
                         for (GoodsCategory firstCategory : firstLevelCategories) {
-                            NewBeeMallIndexCategoryVO newBeeMallIndexCategoryVO = new NewBeeMallIndexCategoryVO();
-                            BeanUtil.copyProperties(firstCategory, newBeeMallIndexCategoryVO);
-                            //如果该一级分类下有数据则放入 newBeeMallIndexCategoryVOS 对象中
+                            XxMallIndexOneLevelCategoryVO xxMallIndexOneLevelCategoryVO = new XxMallIndexOneLevelCategoryVO();
+                            BeanUtil.copyProperties(firstCategory, xxMallIndexOneLevelCategoryVO);
+                            //如果该一级分类下有数据则放入 xxMallIndexOneLevelCategoryVOS 对象中
                             if (secondLevelCategoryVOMap.containsKey(firstCategory.getCategoryId())) {
                                 //根据一级分类的id取出secondLevelCategoryVOMap分组中的二级级分类list
                                 List<SecondLevelCategoryVO> tempGoodsCategories = secondLevelCategoryVOMap.get(firstCategory.getCategoryId());
-                                newBeeMallIndexCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
-                                newBeeMallIndexCategoryVOS.add(newBeeMallIndexCategoryVO);
+                                xxMallIndexOneLevelCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
+                                xxMallIndexOneLevelCategoryVOS.add(xxMallIndexOneLevelCategoryVO);
                             }
                         }
                     }
                 }
             }
-            return newBeeMallIndexCategoryVOS;
+            return xxMallIndexOneLevelCategoryVOS;
         } else {
             return null;
         }

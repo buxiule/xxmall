@@ -3,7 +3,9 @@ package ltd.xx.mall.controller.admin;
 import ltd.xx.mall.common.IndexConfigTypeEnum;
 import ltd.xx.mall.common.ServiceResultEnum;
 import ltd.xx.mall.entity.IndexConfig;
-import ltd.xx.mall.service.NewBeeMallIndexConfigService;
+import ltd.xx.mall.entity.XxMallGoods;
+import ltd.xx.mall.service.XxMallGoodsService;
+import ltd.xx.mall.service.XxMallIndexConfigService;
 import ltd.xx.mall.util.PageQueryUtil;
 import ltd.xx.mall.util.Result;
 import ltd.xx.mall.util.ResultGenerator;
@@ -24,10 +26,13 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/admin")
-public class NewBeeMallGoodsIndexConfigController {
+public class XxMallGoodsIndexConfigController {
 
     @Resource
-    private NewBeeMallIndexConfigService newBeeMallIndexConfigService;
+    private XxMallIndexConfigService xxMallIndexConfigService;
+
+    @Resource
+    private XxMallGoodsService xxMallGoodsService;
 
     @GetMapping("/indexConfigs")
     public String indexConfigsPage(HttpServletRequest request, @RequestParam("configType") int configType) {
@@ -38,7 +43,7 @@ public class NewBeeMallGoodsIndexConfigController {
 
         request.setAttribute("path", indexConfigTypeEnum.getName());
         request.setAttribute("configType", configType);
-        return "admin/newbee_mall_index_config";
+        return "admin/xx_mall_index_config";
     }
 
     /**
@@ -51,7 +56,7 @@ public class NewBeeMallGoodsIndexConfigController {
             return ResultGenerator.genFailResult("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(newBeeMallIndexConfigService.getConfigsPage(pageUtil));
+        return ResultGenerator.genSuccessResult(xxMallIndexConfigService.getConfigsPage(pageUtil));
     }
 
     /**
@@ -62,10 +67,15 @@ public class NewBeeMallGoodsIndexConfigController {
     public Result save(@RequestBody IndexConfig indexConfig) {
         if (Objects.isNull(indexConfig.getConfigType())
                 || StringUtils.isEmpty(indexConfig.getConfigName())
-                || Objects.isNull(indexConfig.getConfigRank())) {
+                || Objects.isNull(indexConfig.getConfigRank())
+                || indexConfig.getGoodsId() == null) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        String result = newBeeMallIndexConfigService.saveIndexConfig(indexConfig);
+        XxMallGoods goods = xxMallGoodsService.getXxMallGoodsById(indexConfig.getGoodsId());
+        if(Objects.isNull(goods)){
+            return ResultGenerator.genFailResult("商品ID输入错误，未找到关联商品！");
+        }
+        String result = xxMallIndexConfigService.saveIndexConfig(indexConfig);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -86,7 +96,7 @@ public class NewBeeMallGoodsIndexConfigController {
                 || Objects.isNull(indexConfig.getConfigRank())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        String result = newBeeMallIndexConfigService.updateIndexConfig(indexConfig);
+        String result = xxMallIndexConfigService.updateIndexConfig(indexConfig);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -100,7 +110,7 @@ public class NewBeeMallGoodsIndexConfigController {
     @GetMapping("/indexConfigs/info/{id}")
     @ResponseBody
     public Result info(@PathVariable("id") Long id) {
-        IndexConfig config = newBeeMallIndexConfigService.getIndexConfigById(id);
+        IndexConfig config = xxMallIndexConfigService.getIndexConfigById(id);
         if (config == null) {
             return ResultGenerator.genFailResult("未查询到数据");
         }
@@ -116,7 +126,7 @@ public class NewBeeMallGoodsIndexConfigController {
         if (ids.length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        if (newBeeMallIndexConfigService.deleteBatch(ids)) {
+        if (xxMallIndexConfigService.deleteBatch(ids)) {
             return ResultGenerator.genSuccessResult();
         } else {
             return ResultGenerator.genFailResult("删除失败");

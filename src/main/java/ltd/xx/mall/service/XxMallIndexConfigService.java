@@ -7,7 +7,7 @@ import ltd.xx.mall.util.PageResult;
 
 import java.util.List;
 
-public interface NewBeeMallIndexConfigService {
+public interface XxMallIndexConfigService {
     /**
      * 后台分页
      *

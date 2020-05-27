@@ -2,7 +2,7 @@ package ltd.xx.mall.service.impl;
 
 import ltd.xx.mall.common.Constants;
 import ltd.xx.mall.common.ServiceResultEnum;
-import ltd.xx.mall.controller.vo.NewBeeMallUserVO;
+import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.dao.MallUserMapper;
 import ltd.xx.mall.entity.MallUser;
 import ltd.xx.mall.service.XxMallUserService;
@@ -58,28 +58,28 @@ public class XxMallUserServiceImpl implements XxMallUserService {
                 String tempNickName = user.getNickName().substring(0, 7) + "..";
                 user.setNickName(tempNickName);
             }
-            NewBeeMallUserVO newBeeMallUserVO = new NewBeeMallUserVO();
-            BeanUtil.copyProperties(user, newBeeMallUserVO);
+            XxMallUserVO xxMallUserVO = new XxMallUserVO();
+            BeanUtil.copyProperties(user, xxMallUserVO);
             //设置购物车中的数量
-            httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, newBeeMallUserVO);
+            httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, xxMallUserVO);
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.LOGIN_ERROR.getResult();
     }
 
     @Override
-    public NewBeeMallUserVO updateUserInfo(MallUser mallUser, HttpSession httpSession) {
+    public XxMallUserVO updateUserInfo(MallUser mallUser, HttpSession httpSession) {
         MallUser user = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
         if (user != null) {
             user.setNickName(mallUser.getNickName());
             user.setAddress(mallUser.getAddress());
             user.setIntroduceSign(mallUser.getIntroduceSign());
             if (mallUserMapper.updateByPrimaryKeySelective(user) > 0) {
-                NewBeeMallUserVO newBeeMallUserVO = new NewBeeMallUserVO();
+                XxMallUserVO xxMallUserVO = new XxMallUserVO();
                 user = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
-                BeanUtil.copyProperties(user, newBeeMallUserVO);
-                httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, newBeeMallUserVO);
-                return newBeeMallUserVO;
+                BeanUtil.copyProperties(user, xxMallUserVO);
+                httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, xxMallUserVO);
+                return xxMallUserVO;
             }
         }
         return null;

@@ -3,9 +3,9 @@ package ltd.xx.mall.controller.mall;
 import ltd.xx.mall.common.Constants;
 import ltd.xx.mall.common.XxMallException;
 import ltd.xx.mall.common.ServiceResultEnum;
-import ltd.xx.mall.controller.vo.NewBeeMallOrderDetailVO;
+import ltd.xx.mall.controller.vo.XxMallOrderDetailVO;
 import ltd.xx.mall.controller.vo.XxMallShoppingCartItemVO;
-import ltd.xx.mall.controller.vo.NewBeeMallUserVO;
+import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.entity.NewBeeMallOrder;
 import ltd.xx.mall.service.NewBeeMallOrderService;
 import ltd.xx.mall.service.XxMallShoppingCartService;
@@ -33,8 +33,8 @@ public class OrderController {
 
     @GetMapping("/orders/{orderNo}")
     public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        NewBeeMallOrderDetailVO orderDetailVO = newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallOrderDetailVO orderDetailVO = newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
         if (orderDetailVO == null) {
             return "error/error_5xx";
         }
@@ -44,7 +44,7 @@ public class OrderController {
 
     @GetMapping("/orders")
     public String orderListPage(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         params.put("userId", user.getUserId());
         if (StringUtils.isEmpty(params.get("page"))) {
             params.put("page", 1);
@@ -59,7 +59,7 @@ public class OrderController {
 
     @GetMapping("/saveOrder")
     public String saveOrder(HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         List<XxMallShoppingCartItemVO> myShoppingCartItems = xxMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (StringUtils.isEmpty(user.getAddress().trim())) {
             //无收货地址
@@ -78,7 +78,7 @@ public class OrderController {
     @PutMapping("/orders/{orderNo}/cancel")
     @ResponseBody
     public Result cancelOrder(@PathVariable("orderNo") String orderNo, HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         String cancelOrderResult = newBeeMallOrderService.cancelOrder(orderNo, user.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(cancelOrderResult)) {
             return ResultGenerator.genSuccessResult();
@@ -90,7 +90,7 @@ public class OrderController {
     @PutMapping("/orders/{orderNo}/finish")
     @ResponseBody
     public Result finishOrder(@PathVariable("orderNo") String orderNo, HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         String finishOrderResult = newBeeMallOrderService.finishOrder(orderNo, user.getUserId());
         if (ServiceResultEnum.SUCCESS.getResult().equals(finishOrderResult)) {
             return ResultGenerator.genSuccessResult();
@@ -101,7 +101,7 @@ public class OrderController {
 
     @GetMapping("/selectPayType")
     public String selectPayType(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         NewBeeMallOrder newBeeMallOrder = newBeeMallOrderService.getNewBeeMallOrderByOrderNo(orderNo);
         //todo 判断订单userId
         //todo 判断订单状态
@@ -112,7 +112,7 @@ public class OrderController {
 
     @GetMapping("/payPage")
     public String payOrder(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession, @RequestParam("payType") int payType) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         NewBeeMallOrder newBeeMallOrder = newBeeMallOrderService.getNewBeeMallOrderByOrderNo(orderNo);
         //todo 判断订单userId
         //todo 判断订单状态

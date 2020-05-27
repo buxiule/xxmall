@@ -2,7 +2,7 @@ package ltd.xx.mall.controller.mall;
 
 import ltd.xx.mall.common.Constants;
 import ltd.xx.mall.common.ServiceResultEnum;
-import ltd.xx.mall.controller.vo.NewBeeMallUserVO;
+import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.entity.MallUser;
 import ltd.xx.mall.service.XxMallUserService;
 import ltd.xx.mall.util.MD5Util;
@@ -111,7 +111,7 @@ public class PersonalController {
     @PostMapping("/personal/updateInfo")
     @ResponseBody
     public Result updateInfo(@RequestBody MallUser mallUser, HttpSession httpSession) {
-        NewBeeMallUserVO mallUserTemp = xxMallUserService.updateUserInfo(mallUser, httpSession);
+        XxMallUserVO mallUserTemp = xxMallUserService.updateUserInfo(mallUser, httpSession);
         if (mallUserTemp == null) {
             Result result = ResultGenerator.genFailResult("修改失败");
             return result;

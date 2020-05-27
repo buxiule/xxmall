@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 订单列表页面VO
  */
-public class NewBeeMallOrderListVO implements Serializable {
+public class XxMallOrderListVO implements Serializable {
 
     private Long orderId;
 
@@ -25,7 +25,7 @@ public class NewBeeMallOrderListVO implements Serializable {
 
     private Date createTime;
 
-    private List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS;
+    private List<XxMallOrderItemVO> xxMallOrderItemVOS;
 
     public Long getOrderId() {
         return orderId;
@@ -91,11 +91,11 @@ public class NewBeeMallOrderListVO implements Serializable {
         this.createTime = createTime;
     }
 
-    public List<NewBeeMallOrderItemVO> getNewBeeMallOrderItemVOS() {
-        return newBeeMallOrderItemVOS;
+    public List<XxMallOrderItemVO> getXxMallOrderItemVOS() {
+        return xxMallOrderItemVOS;
     }
 
-    public void setNewBeeMallOrderItemVOS(List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS) {
-        this.newBeeMallOrderItemVOS = newBeeMallOrderItemVOS;
+    public void setXxMallOrderItemVOS(List<XxMallOrderItemVO> xxMallOrderItemVOS) {
+        this.xxMallOrderItemVOS = xxMallOrderItemVOS;
     }
 }

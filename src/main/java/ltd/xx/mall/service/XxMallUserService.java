@@ -1,6 +1,6 @@
 package ltd.xx.mall.service;
 
-import ltd.xx.mall.controller.vo.NewBeeMallUserVO;
+import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.entity.MallUser;
 import ltd.xx.mall.util.PageQueryUtil;
 import ltd.xx.mall.util.PageResult;
@@ -41,7 +41,7 @@ public interface XxMallUserService {
      * @param mallUser
      * @return
      */
-    NewBeeMallUserVO updateUserInfo(MallUser mallUser, HttpSession httpSession);
+    XxMallUserVO updateUserInfo(MallUser mallUser, HttpSession httpSession);
 
     /**
      * 用户禁用与解除禁用(0-未锁定 1-已锁定)

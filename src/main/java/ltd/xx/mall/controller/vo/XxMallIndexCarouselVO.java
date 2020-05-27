@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 首页轮播图VO
  */
-public class NewBeeMallIndexCarouselVO implements Serializable {
+public class XxMallIndexCarouselVO implements Serializable {
 
     private String carouselUrl;
 

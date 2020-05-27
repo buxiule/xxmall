@@ -1,7 +1,7 @@
 package ltd.xx.mall.controller.admin;
 
 import ltd.xx.mall.common.ServiceResultEnum;
-import ltd.xx.mall.controller.vo.NewBeeMallOrderItemVO;
+import ltd.xx.mall.controller.vo.XxMallOrderItemVO;
 import ltd.xx.mall.entity.NewBeeMallOrder;
 import ltd.xx.mall.service.NewBeeMallOrderService;
 import ltd.xx.mall.util.PageQueryUtil;
@@ -18,15 +18,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- */
+
 @Controller
 @RequestMapping("/admin")
-public class NewBeeMallOrderController {
+public class XxMallOrderController {
 
     @Resource
     private NewBeeMallOrderService newBeeMallOrderService;
@@ -77,7 +72,7 @@ public class NewBeeMallOrderController {
     @GetMapping("/order-items/{id}")
     @ResponseBody
     public Result info(@PathVariable("id") Long id) {
-        List<NewBeeMallOrderItemVO> orderItems = newBeeMallOrderService.getOrderItems(id);
+        List<XxMallOrderItemVO> orderItems = newBeeMallOrderService.getOrderItems(id);
         if (!CollectionUtils.isEmpty(orderItems)) {
             return ResultGenerator.genSuccessResult(orderItems);
         }

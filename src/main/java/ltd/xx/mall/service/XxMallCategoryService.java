@@ -1,6 +1,6 @@
 package ltd.xx.mall.service;
 
-import ltd.xx.mall.controller.vo.NewBeeMallIndexCategoryVO;
+import ltd.xx.mall.controller.vo.XxMallIndexOneLevelCategoryVO;
 import ltd.xx.mall.controller.vo.SearchPageCategoryVO;
 import ltd.xx.mall.entity.GoodsCategory;
 import ltd.xx.mall.util.PageQueryUtil;
@@ -30,7 +30,7 @@ public interface XxMallCategoryService {
      *
      * @return
      */
-    List<NewBeeMallIndexCategoryVO> getCategoriesForIndex();
+    List<XxMallIndexOneLevelCategoryVO> getCategoriesForIndex();
 
     /**
      * 返回分类数据(搜索页调用)

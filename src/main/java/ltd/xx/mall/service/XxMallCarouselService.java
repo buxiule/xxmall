@@ -1,6 +1,6 @@
 package ltd.xx.mall.service;
 
-import ltd.xx.mall.controller.vo.NewBeeMallIndexCarouselVO;
+import ltd.xx.mall.controller.vo.XxMallIndexCarouselVO;
 import ltd.xx.mall.entity.Carousel;
 import ltd.xx.mall.util.PageQueryUtil;
 import ltd.xx.mall.util.PageResult;
@@ -30,5 +30,5 @@ public interface XxMallCarouselService {
      * @param number
      * @return
      */
-    List<NewBeeMallIndexCarouselVO> getCarouselsForIndex(int number);
+    List<XxMallIndexCarouselVO> getCarouselsForIndex(int number);
 }

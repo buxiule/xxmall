@@ -34,12 +34,13 @@ public class XxMallShoppingCartServiceImpl implements XxMallShoppingCartService 
         if (temp != null) {
             //已存在则修改该记录
             //todo count = tempCount + 1
+            
             temp.setGoodsCount(xxMallShoppingCartItem.getGoodsCount());
             return updateXxMallCartItem(temp);
         }
-        XxMallGoods newBeeMallGoods = xxMallGoodsMapper.selectByPrimaryKey(xxMallShoppingCartItem.getGoodsId());
+        XxMallGoods XxMallGoodsInStore = xxMallGoodsMapper.selectByPrimaryKey(xxMallShoppingCartItem.getGoodsId());
         //商品为空
-        if (newBeeMallGoods == null) {
+        if (XxMallGoodsInStore == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
         }
         int totalItem = xxMallShoppingCartItemMapper.selectCountByUserId(xxMallShoppingCartItem.getUserId());

@@ -10,6 +10,8 @@ public enum ServiceResultEnum {
 
     TERM_IS_EMPTY("条件为空"),
 
+    SHOPPING_CART_ITEM_IS_TOO_MUCH("购买数量超过库存"),
+
     SAME_CATEGORY_EXIST("有同级同名的分类！"),
 
     SAME_LOGIN_NAME_EXIST("用户名已存在！"),
@@ -29,6 +31,8 @@ public enum ServiceResultEnum {
     LOGIN_ERROR("登录失败！"),
 
     LOGIN_USER_LOCKED("用户已被禁止登录！"),
+
+    USE_ID_LOAD_FAIL("用户数据定位错误，请重新登录！"),
 
     ORDER_NOT_EXIST_ERROR("订单不存在！"),
 
