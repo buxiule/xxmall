@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-个人中心','personal')">
+<head th:replace="mall/header::head-fragment('熊熊商城-个人中心','personal')">
 </head>
 <link th:href="@{/mall/css/bootstrap-modal.css}" rel="stylesheet">
 <body>
@@ -24,8 +24,6 @@
             </div>
             <div class="info_item ml40"><span>手机号</span><span
                     th:text="${session.xxMallUser.loginName}">newbee-mall</span>
-            </div>
-            <div class="info_item ml40"><span>密码</span><span>******</span>
             </div>
             <div class="info_item ml40"><span>个性签名</span><span
                     th:text="${session.xxMallUser.introduceSign==''?'无':session.xxMallUser.introduceSign}">newbee-mall</span>
@@ -58,6 +56,12 @@
                                        required="true">
                             </div>
                             <div class="form-group">
+                                <label for="passwordMd5" class="control-label">密码:</label>
+                                <input type="text" class="form-control" id="passwordMd5" name="passwordMd5"
+                                       placeholder="请输入大于6位数的字符组合"
+                                       required="true">
+                            </div>
+                            <div class="form-group">
                                 <label for="introduceSign" class="control-label">个性签名:</label>
                                 <input type="text" class="form-control" id="introduceSign" name="introduceSign"
                                        placeholder="请输入个性签名" th:value="${session.xxMallUser.introduceSign}"
@@ -84,6 +88,7 @@
 
 <div th:replace="mall/footer::footer-fragment"></div>
 
+<script th:src="@{/admin/dist/js/public.js}"></script>
 <!-- jQuery -->
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
 <!-- Bootstrap 3 -->
@@ -98,7 +103,7 @@
     //绑定modal上的保存按钮
     $('#saveButton').click(function () {
         var address = $("#address").val();
-        if (address.trim().length < 10) {
+        if (address.trim().length < 8) {
             swal("请输入正确的收货信息", {
                 icon: "error",
             });
@@ -106,7 +111,7 @@
         }
         var introduceSign = $("#introduceSign").val();
         if (introduceSign.trim().length < 4) {
-            swal("请输入正确的个性签名", {
+            swal("个性签名过短", {
                 icon: "error",
             });
             return;
@@ -118,12 +123,20 @@
             });
             return;
         }
+        var passwordMd5 = $("#passwordMd5").val();
+        if (!validPassword(passwordMd5)) {
+            swal("请输入正确的密码格式(6-20位字符和数字组合！", {
+                icon: "error",
+            });
+            return;
+        }
         var userId = $("#userId").val();
         var data = {
             "userId": userId,
             "address": address,
             "introduceSign": introduceSign,
-            "nickName": nickName
+            "nickName": nickName,
+            "passwordMd5": passwordMd5
         };
         $.ajax({
             type: 'POST',//方法类型

@@ -1,7 +1,7 @@
 package ltd.xx.mall.controller.common;
 
 import ltd.xx.mall.common.Constants;
-import ltd.xx.mall.util.NewBeeMallUtils;
+import ltd.xx.mall.util.MallUtils;
 import ltd.xx.mall.util.Result;
 import ltd.xx.mall.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
@@ -54,7 +54,7 @@ public class UploadController {
             }
             file.transferTo(destFile);
             Result resultSuccess = ResultGenerator.genSuccessResult();
-            resultSuccess.setData(NewBeeMallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) +
+            resultSuccess.setData(MallUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) +
                     "/upload/" + newFileName);
             return resultSuccess;
         } catch (IOException e) {

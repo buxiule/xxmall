@@ -31,10 +31,10 @@ public class AdminController {
     }
     //无密码输入时原地跳转
 
-    @GetMapping({"/test"})
-    public String test() {
-        return "admin/test";
-    }
+//    @GetMapping({"/test"})
+//    public String test() {
+//        return "admin/test";
+//    }
 
 
     @GetMapping({"", "/", "/index", "/index.html"})

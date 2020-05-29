@@ -1,7 +1,10 @@
 package ltd.xx.mall.controller.vo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class XxMallUserVO implements Serializable {
 
     private Long userId;
@@ -16,51 +19,51 @@ public class XxMallUserVO implements Serializable {
 
     private int shopCartItemCount;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public String getIntroduceSign() {
-        return introduceSign;
-    }
-
-    public void setIntroduceSign(String introduceSign) {
-        this.introduceSign = introduceSign;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getShopCartItemCount() {
-        return shopCartItemCount;
-    }
-
-    public void setShopCartItemCount(int shopCartItemCount) {
-        this.shopCartItemCount = shopCartItemCount;
-    }
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
+//
+//    public String getNickName() {
+//        return nickName;
+//    }
+//
+//    public void setNickName(String nickName) {
+//        this.nickName = nickName;
+//    }
+//
+//    public String getLoginName() {
+//        return loginName;
+//    }
+//
+//    public void setLoginName(String loginName) {
+//        this.loginName = loginName;
+//    }
+//
+//    public String getIntroduceSign() {
+//        return introduceSign;
+//    }
+//
+//    public void setIntroduceSign(String introduceSign) {
+//        this.introduceSign = introduceSign;
+//    }
+//
+//    public String getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
+//
+//    public int getShopCartItemCount() {
+//        return shopCartItemCount;
+//    }
+//
+//    public void setShopCartItemCount(int shopCartItemCount) {
+//        this.shopCartItemCount = shopCartItemCount;
+//    }
 }

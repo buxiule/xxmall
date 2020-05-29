@@ -10,6 +10,8 @@ public enum ServiceResultEnum {
 
     TERM_IS_EMPTY("条件为空"),
 
+    GOODS_PUT_DOWN("商品已被下架！"),
+
     SHOPPING_CART_ITEM_IS_TOO_MUCH("购买数量超过库存"),
 
     SAME_CATEGORY_EXIST("有同级同名的分类！"),

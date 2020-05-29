@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @link https://github.com/newbee-ltd
  */
 @Component
-public class NewBeeMallCartNumberInterceptor implements HandlerInterceptor {
+public class MallCartNumberInterceptor implements HandlerInterceptor {
 
     @Autowired
     private XxMallShoppingCartItemMapper xxMallShoppingCartItemMapper;

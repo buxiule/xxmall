@@ -6,10 +6,7 @@ import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.dao.MallUserMapper;
 import ltd.xx.mall.entity.MallUser;
 import ltd.xx.mall.service.XxMallUserService;
-import ltd.xx.mall.util.BeanUtil;
-import ltd.xx.mall.util.MD5Util;
-import ltd.xx.mall.util.PageQueryUtil;
-import ltd.xx.mall.util.PageResult;
+import ltd.xx.mall.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,15 +66,17 @@ public class XxMallUserServiceImpl implements XxMallUserService {
 
     @Override
     public XxMallUserVO updateUserInfo(MallUser mallUser, HttpSession httpSession) {
-        MallUser user = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
-        if (user != null) {
-            user.setNickName(mallUser.getNickName());
-            user.setAddress(mallUser.getAddress());
-            user.setIntroduceSign(mallUser.getIntroduceSign());
-            if (mallUserMapper.updateByPrimaryKeySelective(user) > 0) {
+        XxMallUserVO userTemp = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        MallUser userFromDB = mallUserMapper.selectByPrimaryKey(userTemp.getUserId());
+        if (userFromDB != null) {
+            userFromDB.setNickName(MallUtils.cleanString(mallUser.getNickName()));
+            userFromDB.setAddress(MallUtils.cleanString(mallUser.getAddress()));
+            userFromDB.setIntroduceSign(MallUtils.cleanString(mallUser.getIntroduceSign()));
+            userFromDB.setPasswordMd5(MD5Util.MD5Encode(mallUser.getPasswordMd5(), "UTF-8"));
+            if (mallUserMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
                 XxMallUserVO xxMallUserVO = new XxMallUserVO();
-                user = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
-                BeanUtil.copyProperties(user, xxMallUserVO);
+                userFromDB = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
+                BeanUtil.copyProperties(userFromDB, xxMallUserVO);
                 httpSession.setAttribute(Constants.MALL_USER_SESSION_KEY, xxMallUserVO);
                 return xxMallUserVO;
             }

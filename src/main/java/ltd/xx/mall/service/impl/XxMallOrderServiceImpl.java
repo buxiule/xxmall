@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
 
 @Service
-public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
+public class XxMallOrderServiceImpl implements NewBeeMallOrderService {
 
     @Autowired
     private NewBeeMallOrderMapper newBeeMallOrderMapper;

@@ -1,11 +1,13 @@
 package ltd.xx.mall.controller.mall;
 
 import ltd.xx.mall.common.Constants;
+import ltd.xx.mall.common.XxMallException;
 import ltd.xx.mall.controller.vo.XxMallGoodsDetailVO;
 import ltd.xx.mall.controller.vo.SearchPageCategoryVO;
 import ltd.xx.mall.entity.XxMallGoods;
 import ltd.xx.mall.service.XxMallCategoryService;
 import ltd.xx.mall.service.XxMallGoodsService;
+import ltd.xx.mall.common.ServiceResultEnum;
 import ltd.xx.mall.util.BeanUtil;
 import ltd.xx.mall.util.PageQueryUtil;
 import org.springframework.stereotype.Controller;
@@ -53,6 +55,8 @@ public class GoodsController {
         request.setAttribute("keyword", keyword);
         params.put("keyword", keyword);
         //封装商品数据
+        params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
+        //搜索上架状态下的商品
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         request.setAttribute("pageResult", xxMallGoodsService.searchXxMallGoods(pageUtil));
         return "mall/search";
@@ -65,7 +69,10 @@ public class GoodsController {
         }
         XxMallGoods goods = xxMallGoodsService.getXxMallGoodsById(goodsId);
         if (goods == null) {
-            return "error/error_404";
+            XxMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
+            XxMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
         }
         XxMallGoodsDetailVO goodsDetailVO = new XxMallGoodsDetailVO();
         BeanUtil.copyProperties(goods, goodsDetailVO);
