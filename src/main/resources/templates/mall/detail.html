@@ -103,6 +103,8 @@
                             window.location.reload();
                         }
                     );
+                } else if (result.resultCode == 302){
+                    window.location.href = '/login'
                 } else {
                     swal(result.message, {
                         icon: "error",
@@ -147,6 +149,8 @@
                             }
                         }
                     );
+                } else if (result.resultCode == 302){
+                    window.location.href = '/login'
                 } else {
                     swal(result.message, {
                         icon: "error",

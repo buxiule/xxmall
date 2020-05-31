@@ -367,4 +367,14 @@ public class XxMallOrderServiceImpl implements XxMallOrderService {
         }
         return null;
     }
+
+    @Override
+    public List<CountMallVO> countMallTransactionAmount() {
+        return xxMallOrderMapper.countMallTransactionAmount();
+    }
+
+    @Override
+    public XxMallOrder findOrderByNo(String orderNo) {
+        return xxMallOrderMapper.selectByOrderNo(orderNo);
+    }
 }

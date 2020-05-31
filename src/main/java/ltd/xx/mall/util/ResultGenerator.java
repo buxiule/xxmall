@@ -12,14 +12,23 @@ import org.springframework.util.StringUtils;
  */
 public class ResultGenerator {
     private static final String DEFAULT_SUCCESS_MESSAGE = "SUCCESS";
+    private static final String DEFAULT_JUMP_MESSAGE = "JUMP";
     private static final String DEFAULT_FAIL_MESSAGE = "FAIL";
     private static final int RESULT_CODE_SUCCESS = 200;
     private static final int RESULT_CODE_SERVER_ERROR = 500;
+    private static final int RESULT_CODE_SERVER_JUMP = 302;
 
     public static Result genSuccessResult() {
         Result result = new Result();
         result.setResultCode(RESULT_CODE_SUCCESS);
         result.setMessage(DEFAULT_SUCCESS_MESSAGE);
+        return result;
+    }
+
+    public static Result genJumpResult() {
+        Result result = new Result();
+        result.setResultCode(RESULT_CODE_SERVER_JUMP);
+        result.setMessage(DEFAULT_JUMP_MESSAGE);
         return result;
     }
 
@@ -55,4 +64,6 @@ public class ResultGenerator {
         result.setMessage(message);
         return result;
     }
+
+
 }

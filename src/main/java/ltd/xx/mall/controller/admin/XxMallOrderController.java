@@ -1,12 +1,25 @@
 package ltd.xx.mall.controller.admin;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import ltd.xx.mall.common.Constants;
+import ltd.xx.mall.common.PayStatusEnum;
 import ltd.xx.mall.common.ServiceResultEnum;
+import ltd.xx.mall.common.XxMallOrderStatusEnum;
+import ltd.xx.mall.config.AlipayConfig;
+import ltd.xx.mall.controller.common.BusinessException;
+import ltd.xx.mall.controller.vo.CountMallVO;
 import ltd.xx.mall.controller.vo.XxMallOrderItemVO;
+import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.entity.XxMallOrder;
 import ltd.xx.mall.service.XxMallOrderService;
+import ltd.xx.mall.util.HttpUtil;
 import ltd.xx.mall.util.PageQueryUtil;
 import ltd.xx.mall.util.Result;
 import ltd.xx.mall.util.ResultGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -14,9 +27,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 
 @Controller
@@ -25,6 +38,7 @@ public class XxMallOrderController {
 
     @Resource
     private XxMallOrderService xxMallOrderService;
+
 
     @GetMapping("/orders")
     public String ordersPage(HttpServletRequest request) {
@@ -78,7 +92,23 @@ public class XxMallOrderController {
         }
         return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
     }
-
+    /**
+     * 报表
+     */
+    @GetMapping("/table")
+    public String index(HttpServletRequest request) {
+        List<CountMallVO> countMallVOS = xxMallOrderService.countMallTransactionAmount();
+        ArrayList<String> xAxisData = new ArrayList<>();
+        ArrayList<Long> seriesData = new ArrayList<>();
+        for (CountMallVO countMallVO : countMallVOS) {
+            xAxisData.add(countMallVO.getDays());
+            seriesData.add(countMallVO.getTotalPrice());
+        }
+        request.setAttribute("xAxisData", xAxisData);
+        request.setAttribute("seriesData", seriesData);
+        request.setAttribute("path", "table");
+        return "admin/table";
+    }
     /**
      * 配货
      */
@@ -129,6 +159,8 @@ public class XxMallOrderController {
             return ResultGenerator.genFailResult(result);
         }
     }
+
+
 
 
 }

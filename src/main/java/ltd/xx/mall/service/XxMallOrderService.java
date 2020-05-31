@@ -1,9 +1,6 @@
 package ltd.xx.mall.service;
 
-import ltd.xx.mall.controller.vo.XxMallOrderDetailVO;
-import ltd.xx.mall.controller.vo.XxMallOrderItemVO;
-import ltd.xx.mall.controller.vo.XxMallShoppingCartItemVO;
-import ltd.xx.mall.controller.vo.XxMallUserVO;
+import ltd.xx.mall.controller.vo.*;
 import ltd.xx.mall.entity.XxMallOrder;
 import ltd.xx.mall.util.PageQueryUtil;
 import ltd.xx.mall.util.PageResult;
@@ -106,4 +103,8 @@ public interface XxMallOrderService {
     String paySuccess(String orderNo, int payType);
 
     List<XxMallOrderItemVO> getOrderItems(Long id);
+
+    List<CountMallVO> countMallTransactionAmount();
+
+    XxMallOrder findOrderByNo(String orderNo);
 }

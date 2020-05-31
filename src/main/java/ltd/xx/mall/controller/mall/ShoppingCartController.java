@@ -55,6 +55,9 @@ public class ShoppingCartController {
     public Result saveNewBeeMallShoppingCartItem(@RequestBody XxMallShoppingCartItem xxMallShoppingCartItem,
                                                  HttpSession httpSession) {
         XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        if(user == null) {
+            return ResultGenerator.genJumpResult();
+        }
         xxMallShoppingCartItem.setUserId(user.getUserId());
         //todo 判断数量
         String saveResult = xxMallShoppingCartService.saveXxMallCartItem(xxMallShoppingCartItem);

@@ -1,5 +1,6 @@
 package ltd.xx.mall.dao;
 
+import ltd.xx.mall.controller.vo.CountMallVO;
 import ltd.xx.mall.entity.XxMallOrder;
 import ltd.xx.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
@@ -32,4 +33,6 @@ public interface XxMallOrderMapper {
     int closeOrder(@Param("orderIds") List<Long> orderIds, @Param("orderStatus") int orderStatus);
 
     int checkDone(@Param("orderIds") List<Long> asList);
+
+    List<CountMallVO> countMallTransactionAmount();
 }

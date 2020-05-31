@@ -16,6 +16,12 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+
+    <resultMap id="CountMallVOMap" type="ltd.xx.mall.controller.vo.CountMallVO">
+        <result column="days" property="days"/>
+        <result column="total_price" property="totalPrice"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
     order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
     extra_info, user_name, user_phone, user_address, is_deleted, create_time, update_time
@@ -40,6 +46,15 @@
         <foreach collection="orderIds" item="item" index="index"
                  open="(" separator="," close=")">#{item}
         </foreach>
+    </select>
+    <select id="countMallTransactionAmount" resultMap="CountMallVOMap">
+        select
+            DATE_FORMAT( c.create_time, '%Y-%m-%d' ) days,
+            sum( c.total_price ) total_price
+        from
+            ( SELECT * FROM tb_xx_mall_order WHERE create_time <![CDATA[ >= ]]>  DATE_SUB( now(), INTERVAL 15 DAY ) and order_status = 4 ) AS c
+        group by
+            days;
     </select>
     <select id="findXxMallOrderList" parameterType="Map" resultMap="BaseResultMap">
         select
