@@ -2,8 +2,8 @@ package ltd.xx.mall.controller.admin;
 
 import ltd.xx.mall.common.ServiceResultEnum;
 import ltd.xx.mall.controller.vo.XxMallOrderItemVO;
-import ltd.xx.mall.entity.NewBeeMallOrder;
-import ltd.xx.mall.service.NewBeeMallOrderService;
+import ltd.xx.mall.entity.XxMallOrder;
+import ltd.xx.mall.service.XxMallOrderService;
 import ltd.xx.mall.util.PageQueryUtil;
 import ltd.xx.mall.util.Result;
 import ltd.xx.mall.util.ResultGenerator;
@@ -24,12 +24,12 @@ import java.util.Objects;
 public class XxMallOrderController {
 
     @Resource
-    private NewBeeMallOrderService newBeeMallOrderService;
+    private XxMallOrderService xxMallOrderService;
 
     @GetMapping("/orders")
     public String ordersPage(HttpServletRequest request) {
         request.setAttribute("path", "orders");
-        return "admin/newbee_mall_order";
+        return "admin/xx_mall_order";
     }
 
     /**
@@ -42,7 +42,7 @@ public class XxMallOrderController {
             return ResultGenerator.genFailResult("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(newBeeMallOrderService.getNewBeeMallOrdersPage(pageUtil));
+        return ResultGenerator.genSuccessResult(xxMallOrderService.getNewBeeMallOrdersPage(pageUtil));
     }
 
     /**
@@ -50,15 +50,15 @@ public class XxMallOrderController {
      */
     @RequestMapping(value = "/orders/update", method = RequestMethod.POST)
     @ResponseBody
-    public Result update(@RequestBody NewBeeMallOrder newBeeMallOrder) {
-        if (Objects.isNull(newBeeMallOrder.getTotalPrice())
-                || Objects.isNull(newBeeMallOrder.getOrderId())
-                || newBeeMallOrder.getOrderId() < 1
-                || newBeeMallOrder.getTotalPrice() < 1
-                || StringUtils.isEmpty(newBeeMallOrder.getUserAddress())) {
+    public Result update(@RequestBody XxMallOrder xxMallOrder) {
+        if (Objects.isNull(xxMallOrder.getTotalPrice())
+                || Objects.isNull(xxMallOrder.getOrderId())
+                || xxMallOrder.getOrderId() < 1
+                || xxMallOrder.getTotalPrice() < 1
+                || StringUtils.isEmpty(xxMallOrder.getUserAddress())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        String result = newBeeMallOrderService.updateOrderInfo(newBeeMallOrder);
+        String result = xxMallOrderService.updateOrderInfo(xxMallOrder);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -72,7 +72,7 @@ public class XxMallOrderController {
     @GetMapping("/order-items/{id}")
     @ResponseBody
     public Result info(@PathVariable("id") Long id) {
-        List<XxMallOrderItemVO> orderItems = newBeeMallOrderService.getOrderItems(id);
+        List<XxMallOrderItemVO> orderItems = xxMallOrderService.getOrderItems(id);
         if (!CollectionUtils.isEmpty(orderItems)) {
             return ResultGenerator.genSuccessResult(orderItems);
         }
@@ -88,7 +88,7 @@ public class XxMallOrderController {
         if (ids.length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        String result = newBeeMallOrderService.checkDone(ids);
+        String result = xxMallOrderService.checkDone(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -105,7 +105,7 @@ public class XxMallOrderController {
         if (ids.length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        String result = newBeeMallOrderService.checkOut(ids);
+        String result = xxMallOrderService.checkOut(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -122,7 +122,7 @@ public class XxMallOrderController {
         if (ids.length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        String result = newBeeMallOrderService.closeOrder(ids);
+        String result = xxMallOrderService.closeOrder(ids);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {

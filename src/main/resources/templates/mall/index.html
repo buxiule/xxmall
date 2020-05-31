@@ -36,7 +36,8 @@
                 <th:block th:unless="${#lists.isEmpty(carousels)}">
                     <th:block th:each="carousel : ${carousels}">
                         <div class="swiper-slide">
-                            <a th:href="@{${carousel.redirectUrl}}">
+                                <a th:href="@{'/goods/detail/'+${carousel.goodsId}}">
+<!--                            <a th:href="@{${carousel.redirectUrl}}">-->
                                 <img th:src="@{${carousel.carouselUrl}}" alt="">
                             </a>
                         </div>

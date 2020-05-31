@@ -28,7 +28,7 @@ public class XxMallUserController {
     @GetMapping("/users")
     public String usersPage(HttpServletRequest request) {
         request.setAttribute("path", "users");
-        return "admin/newbee_mall_user";
+        return "admin/xx_mall_user";
     }
 
     /**

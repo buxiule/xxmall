@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ltd.xx.mall.dao.NewBeeMallOrderItemMapper">
-    <resultMap id="BaseResultMap" type="ltd.xx.mall.entity.NewBeeMallOrderItem">
+<mapper namespace="ltd.xx.mall.dao.XxMallOrderItemMapper">
+    <resultMap id="BaseResultMap" type="ltd.xx.mall.entity.XxMallOrderItem">
         <id column="order_item_id" jdbcType="BIGINT" property="orderItemId"/>
         <result column="order_id" jdbcType="BIGINT" property="orderId"/>
         <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
@@ -18,19 +18,19 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_order_item
+        from tb_xx_mall_order_item
         where order_item_id = #{orderItemId,jdbcType=BIGINT}
     </select>
     <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_order_item
+        from tb_xx_mall_order_item
         where order_id = #{orderItemId,jdbcType=BIGINT}
     </select>
     <select id="selectByOrderIds" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_order_item
+        from tb_xx_mall_order_item
         where order_id
         in
         <foreach item="id" collection="orderIds" open="(" separator="," close=")">
@@ -38,11 +38,11 @@
         </foreach>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_newbee_mall_order_item
+    delete from tb_xx_mall_order_item
     where order_item_id = #{orderItemId,jdbcType=BIGINT}
   </delete>
-    <insert id="insertBatch" parameterType="ltd.xx.mall.entity.NewBeeMallOrderItem">
-        insert into tb_newbee_mall_order_item (order_id, goods_id,
+    <insert id="insertBatch" parameterType="ltd.xx.mall.entity.XxMallOrderItem">
+        insert into tb_xx_mall_order_item (order_id, goods_id,
         goods_name, goods_cover_img, selling_price,
         goods_count)
         values
@@ -53,16 +53,16 @@
             #{orderItem.goodsCount,jdbcType=INTEGER})
         </foreach>
     </insert>
-    <insert id="insert" parameterType="ltd.xx.mall.entity.NewBeeMallOrderItem">
-    insert into tb_newbee_mall_order_item (order_item_id, order_id, goods_id,
+    <insert id="insert" parameterType="ltd.xx.mall.entity.XxMallOrderItem">
+    insert into tb_xx_mall_order_item (order_item_id, order_id, goods_id,
       goods_name, goods_cover_img, selling_price,
       goods_count, create_time)
     values (#{orderItemId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
       #{goodsName,jdbcType=VARCHAR}, #{goodsCoverImg,jdbcType=VARCHAR}, #{sellingPrice,jdbcType=INTEGER},
       #{goodsCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="ltd.xx.mall.entity.NewBeeMallOrderItem">
-        insert into tb_newbee_mall_order_item
+    <insert id="insertSelective" parameterType="ltd.xx.mall.entity.XxMallOrderItem">
+        insert into tb_xx_mall_order_item
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderItemId != null">
                 order_item_id,
@@ -116,8 +116,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="ltd.xx.mall.entity.NewBeeMallOrderItem">
-        update tb_newbee_mall_order_item
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.xx.mall.entity.XxMallOrderItem">
+        update tb_xx_mall_order_item
         <set>
             <if test="orderId != null">
                 order_id = #{orderId,jdbcType=BIGINT},
@@ -143,8 +143,8 @@
         </set>
         where order_item_id = #{orderItemId,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="ltd.xx.mall.entity.NewBeeMallOrderItem">
-    update tb_newbee_mall_order_item
+    <update id="updateByPrimaryKey" parameterType="ltd.xx.mall.entity.XxMallOrderItem">
+    update tb_xx_mall_order_item
     set order_id = #{orderId,jdbcType=BIGINT},
       goods_id = #{goodsId,jdbcType=BIGINT},
       goods_name = #{goodsName,jdbcType=VARCHAR},

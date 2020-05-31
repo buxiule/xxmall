@@ -4,13 +4,13 @@ import ltd.xx.mall.controller.vo.XxMallOrderDetailVO;
 import ltd.xx.mall.controller.vo.XxMallOrderItemVO;
 import ltd.xx.mall.controller.vo.XxMallShoppingCartItemVO;
 import ltd.xx.mall.controller.vo.XxMallUserVO;
-import ltd.xx.mall.entity.NewBeeMallOrder;
+import ltd.xx.mall.entity.XxMallOrder;
 import ltd.xx.mall.util.PageQueryUtil;
 import ltd.xx.mall.util.PageResult;
 
 import java.util.List;
 
-public interface NewBeeMallOrderService {
+public interface XxMallOrderService {
     /**
      * 后台分页
      *
@@ -22,10 +22,10 @@ public interface NewBeeMallOrderService {
     /**
      * 订单信息修改
      *
-     * @param newBeeMallOrder
+     * @param xxMallOrder
      * @return
      */
-    String updateOrderInfo(NewBeeMallOrder newBeeMallOrder);
+    String updateOrderInfo(XxMallOrder xxMallOrder);
 
     /**
      * 配货
@@ -75,7 +75,7 @@ public interface NewBeeMallOrderService {
      * @param orderNo
      * @return
      */
-    NewBeeMallOrder getNewBeeMallOrderByOrderNo(String orderNo);
+    XxMallOrder getNewBeeMallOrderByOrderNo(String orderNo);
 
     /**
      * 我的订单列表

@@ -116,6 +116,7 @@ public class ShoppingCartController {
         }
         request.setAttribute("priceTotal", priceTotal);
         request.setAttribute("myShoppingCartItems", myShoppingCartItems);
+        request.setAttribute("goodsCarriage", Constants.GOODS_CARRIAGE);
         return "mall/order-settle";
     }
 }

@@ -11,10 +11,11 @@
         <result column="create_user" jdbcType="INTEGER" property="createUser"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
     </resultMap>
     <sql id="Base_Column_List">
     carousel_id, carousel_url, redirect_url, carousel_rank, is_deleted, create_time,
-    create_user, update_time, update_user
+    create_user, update_time, update_user, goods_id
   </sql>
     <select id="findCarouselList" parameterType="Map" resultMap="BaseResultMap">
         select
@@ -51,11 +52,11 @@
     <insert id="insert" parameterType="ltd.xx.mall.entity.Carousel">
     insert into tb_xx_mall_carousel (carousel_id, carousel_url, redirect_url,
       carousel_rank, is_deleted, create_time,
-      create_user, update_time, update_user
+      create_user, update_time, update_user, goods_id
       )
     values (#{carouselId,jdbcType=INTEGER}, #{carouselUrl,jdbcType=VARCHAR}, #{redirectUrl,jdbcType=VARCHAR},
       #{carouselRank,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
-      #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}
+      #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}, #{goodsId,jdbcType=BIGINT}
       )
   </insert>
     <insert id="insertSelective" parameterType="ltd.xx.mall.entity.Carousel">
@@ -88,6 +89,9 @@
             <if test="updateUser != null">
                 update_user,
             </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="carouselId != null">
@@ -117,6 +121,9 @@
             <if test="updateUser != null">
                 #{updateUser,jdbcType=INTEGER},
             </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="ltd.xx.mall.entity.Carousel">
@@ -145,6 +152,9 @@
             </if>
             <if test="updateUser != null">
                 update_user = #{updateUser,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=BIGINT},
             </if>
         </set>
         where carousel_id = #{carouselId,jdbcType=INTEGER}

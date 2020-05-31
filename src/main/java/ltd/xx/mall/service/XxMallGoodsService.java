@@ -26,10 +26,10 @@ public interface XxMallGoodsService {
     /**
      * 批量新增商品数据
      *
-     * @param newBeeMallGoodsList
+     * @param xxMallGoodsList
      * @return
      */
-    void batchSaveXxMallGoods(List<XxMallGoods> newBeeMallGoodsList);
+    void batchSaveXxMallGoods(List<XxMallGoods> xxMallGoodsList);
 
     /**
      * 修改商品信息

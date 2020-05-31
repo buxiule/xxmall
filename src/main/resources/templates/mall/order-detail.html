@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-订单详情','order-detail')">
+<head th:replace="mall/header::head-fragment('熊熊商城-订单详情','order-detail')">
 </head>
 <link rel="stylesheet" th:href="@{/admin/plugins/sweetalert/sweetalert.css}"/>
 <body>
@@ -20,7 +20,7 @@
                 <div class="uc-content-box order-view-box">
                     <div class="box-hd">
                         <h1 class="title">订单详情
-                            <small>请谨防钓鱼链接或诈骗电话，<a href="##">了解更多&gt;</a>
+                            <small>请谨防钓鱼链接或诈骗电话，<a href="##"></a>
                             </small>
                         </h1>
                         <div class="more clearfix">
@@ -30,10 +30,10 @@
                             </h2>
                             <div class="actions">
                                 <input type="hidden" id="orderNoValue" th:value="${orderDetailVO.orderNo}">
-                                <th:block th:if="${orderDetailVO.orderStatus>0 and orderDetailVO.orderStatus<3}">
-                                    <a onclick="cancelOrder()"
-                                       class="btn btn-small btn-line-gray" title="取消订单">取消订单</a>
-                                </th:block>
+<!--                                <th:block th:if="${orderDetailVO.orderStatus>0 and orderDetailVO.orderStatus<3}">-->
+<!--                                    <a onclick="cancelOrder()"-->
+<!--                                       class="btn btn-small btn-line-gray" title="取消订单">取消订单</a>-->
+<!--                                </th:block>-->
                                 <th:block th:if="${orderDetailVO.orderStatus==0}">
                                     <a onclick="payOrder()"
                                        class="btn btn-small btn-primary" title="去支付">去支付</a>
@@ -41,6 +41,13 @@
                                 <th:block th:if="${orderDetailVO.orderStatus==3}">
                                     <a onclick="finishOrder()"
                                        class="btn btn-small btn-primary" title="确认收货">确认收货</a>
+                                </th:block>
+                                <th:block th:if="${orderDetailVO.orderStatus!=-1 and orderDetailVO.orderStatus!=4}">
+                                    <a onclick="cancelOrder()"
+                                       class="btn btn-small btn-line-gray" title="取消订单">取消订单</a>
+                                </th:block>
+                                <th:block th:if="${orderDetailVO.orderStatus==-1}">
+                                    <a class="btn btn-small btn-line-gray" title="订单状态">订单已取消</a>
                                 </th:block>
                             </div>
                         </div>
@@ -51,14 +58,14 @@
 
                                 <div class="order-summary">
                                     <div class="order-status" th:text="${orderDetailVO.orderStatusString}">
-                                        newbee
+                                        熊熊
                                     </div>
                                     <div class="order-desc">
                                         <th:block th:if="${orderDetailVO.orderStatus==0}">请尽快完成支付哦~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==1}">newbee商城订单确认中~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==2}">newbee仓库正在紧急配货中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==1}">订单确认中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==2}">仓库正在配货中~</th:block>
                                         <th:block th:if="${orderDetailVO.orderStatus==3}">订单已出库正在快马加鞭向您奔来~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==4}">交易成功，感谢您对newbee商城的支持~
+                                        <th:block th:if="${orderDetailVO.orderStatus==4}">交易成功，感谢您对熊熊商城的支持~
                                         </th:block>
                                         <th:block th:if="${orderDetailVO.orderStatus<0}">交易已关闭~</th:block>
 
@@ -145,7 +152,7 @@
                                             <td class="col col-name">
                                                 <p class="name">
                                                     <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
-                                                       th:text="${item.goodsName}">newbee</a>
+                                                       th:text="${item.goodsName}">熊熊</a>
                                                 </p>
                                             </td>
                                             <td class="col col-price"><p class="price"
@@ -163,7 +170,7 @@
                                 <table class="info-table">
                                     <tbody>
                                     <tr>
-                                        <td th:text="${orderDetailVO.userAddress}">newbee</td>
+                                        <td th:text="${orderDetailVO.userAddress}">熊熊</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -190,7 +197,7 @@
                                     <tbody>
                                     <tr>
                                         <th>运费：</th>
-                                        <td><span class="num">0</span>元</td>
+                                        <td><span class="num" th:text="${orderDetailVO.goodsCarriage+'.00'}">0</span>元</td>
                                     </tr>
                                     <tr>
                                         <th class="total">商品总价：</th>

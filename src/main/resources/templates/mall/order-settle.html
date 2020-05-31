@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-订单结算','order-detail')">
+<head th:replace="mall/header::head-fragment('熊熊商城-订单结算','order-detail')">
 </head>
 <link th:href="@{/mall/css/bootstrap-modal.css}" rel="stylesheet">
 <body>
@@ -72,7 +72,7 @@
                                             <td class="col col-name">
                                                 <p class="name">
                                                     <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
-                                                       th:text="${item.goodsName}">newbee</a>
+                                                       th:text="${item.goodsName}">熊熊商城</a>
                                                 </p>
                                             </td>
                                             <td class="col col-price"><p class="price"
@@ -89,6 +89,18 @@
                                 <h3>收货信息</h3>
                                 <table class="info-table">
                                     <tbody>
+                                    <tr>
+                                        <th>收货人：</th>
+                                        <td class="user_name_label"
+                                            th:text="${session.xxMallUser.nickName==''?'无':session.xxMallUser.nickName}">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>收货电话：</th>
+                                        <td class="user_phone_label"
+                                            th:text="${session.xxMallUser.loginName==''?'无':session.xxMallUser.loginName}">
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th>收货地址：</th>
                                         <td class="user_address_label"
@@ -125,11 +137,11 @@
                                     </tr>
                                     <tr>
                                         <th>运费：</th>
-                                        <td><span class="num">0</span>元</td>
+                                        <td><span class="num" th:text="${goodsCarriage+'.00'}">0</span>元</td>
                                     </tr>
                                     <tr>
                                         <th class="total">应付金额：</th>
-                                        <td class="total"><span class="num" th:text="${priceTotal+'.00'}">1299.00</span>元
+                                        <td class="total"><span class="num" th:text="${priceTotal+goodsCarriage+'.00'}">1299.00</span>元
                                         </td>
                                     </tr>
                                     </tbody>
@@ -147,12 +159,24 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h6 class="modal-title" id="personalInfoModalLabel">地址修改</h6>
+                        <h6 class="modal-title" id="personalInfoModalLabel">收货信息修改</h6>
                     </div>
                     <div class="modal-body">
                         <form id="personalInfoForm">
                             <div class="form-group">
                                 <input type="hidden" id="userId" th:value="${session.xxMallUser.userId}">
+                                <label for="name" class="control-label">收货人:</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                       placeholder="请输入收货人姓名" th:value="${session.xxMallUser.nickName}"
+                                       required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="control-label">收货人电话☎:</label>
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                       placeholder="请输入收货人姓名" th:value="${session.xxMallUser.loginName}"
+                                       required="true">
+                            </div>
+                            <div class="form-group">
                                 <label for="address" class="control-label">收货地址:</label>
                                 <input type="text" class="form-control" id="address" name="address"
                                        placeholder="请输入收货地址" th:value="${session.xxMallUser.address}"
@@ -188,6 +212,26 @@
             });
             return;
         }
+        var userName = $(".user_name_label").html();
+        if (userName == '' || userName == '无')  {
+            swal("请填写收货人", {
+                icon: "error",
+            });
+            return;
+        }
+        var userPhone = $(".user_Phone_label").html();
+        if (userPhone == '' || userPhone == '无')  {
+            swal("请填写收货电话", {
+                icon: "error",
+            });
+            return;
+        }
+        // if (userPhone.trim().length < 11) {
+        //     swal("请输入正确的收货电话", {
+        //         icon: "error",
+        //     });
+        //     return;
+        // }
         if (userAddress.trim().length < 10) {
             swal("请输入正确的收货信息", {
                 icon: "error",

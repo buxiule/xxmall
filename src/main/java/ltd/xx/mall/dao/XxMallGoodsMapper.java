@@ -24,7 +24,7 @@ public interface XxMallGoodsMapper {
 
 //    int updateByPrimaryKey(XxMallGoods record);
 
-    List<XxMallGoods> findNewBeeMallGoodsList(PageQueryUtil pageUtil);
+    List<XxMallGoods> findXxMallGoodsList(PageQueryUtil pageUtil);
 
     int getTotalXxMallGoods(PageQueryUtil pageUtil);
 
@@ -34,7 +34,7 @@ public interface XxMallGoodsMapper {
 
     int getTotalXxMallGoodsBySearch(PageQueryUtil pageUtil);
 
-    int batchInsert(@Param("newBeeMallGoodsList") List<XxMallGoods> newBeeMallGoodsList);
+    int batchInsert(@Param("newBeeMallGoodsList") List<XxMallGoods> xxMallGoodsList);
 
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 

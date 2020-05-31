@@ -16,12 +16,10 @@ $(function () {
         uploadJson: '/admin/upload/file',
         filePostName: 'file'
     });
-
     new AjaxUpload('#uploadGoodsCoverImg', {
         action: '/admin/upload/file',
         name: 'file',
         autoSubmit: true,
-        responseType: "json",
         onSubmit: function (file, extension) {
             if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
                 alert('只支持jpg、png、gif格式的文件！');
@@ -29,6 +27,8 @@ $(function () {
             }
         },
         onComplete: function (file, r) {
+            r = $.parseJSON(r.replace(/<.*?>/ig,""))
+            console.log(r);
             if (r != null && r.resultCode == 200) {
                 $("#goodsCoverImg").attr("src", r.data);
                 $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");

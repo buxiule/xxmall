@@ -28,7 +28,7 @@
         <th:block th:if="${#lists.isEmpty(myShoppingCartItems)}">
             <div class="list center">
                 <!-- todo 无购物项时 换背景图 -->
-                无数据
+                <h2>你的购物车空空如也!</h2>
             </div>
         </th:block>
         <th:block th:unless="${#lists.isEmpty(myShoppingCartItems)}">

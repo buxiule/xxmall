@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ltd.xx.mall.dao.NewBeeMallOrderMapper">
-    <resultMap id="BaseResultMap" type="ltd.xx.mall.entity.NewBeeMallOrder">
+<mapper namespace="ltd.xx.mall.dao.XxMallOrderMapper">
+    <resultMap id="BaseResultMap" type="ltd.xx.mall.entity.XxMallOrder">
         <id column="order_id" jdbcType="BIGINT" property="orderId"/>
         <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
@@ -23,28 +23,28 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_order
+        from tb_xx_mall_order
         where order_id = #{orderId,jdbcType=BIGINT}
     </select>
     <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_order
+        from tb_xx_mall_order
         where order_no = #{orderNo,jdbcType=VARCHAR} and is_deleted=0 limit 1
     </select>
     <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_order
+        from tb_xx_mall_order
         where order_id in
         <foreach collection="orderIds" item="item" index="index"
                  open="(" separator="," close=")">#{item}
         </foreach>
     </select>
-    <select id="findNewBeeMallOrderList" parameterType="Map" resultMap="BaseResultMap">
+    <select id="findXxMallOrderList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_order
+        from tb_xx_mall_order
         <where>
             <if test="orderNo!=null and orderNo!=''">
                 and order_no = #{orderNo}
@@ -74,8 +74,8 @@
         </if>
     </select>
 
-    <select id="getTotalNewBeeMallOrders" parameterType="Map" resultType="int">
-        select count(*) from tb_newbee_mall_order
+    <select id="getTotalXxMallOrders" parameterType="Map" resultType="int">
+        select count(*) from tb_xx_mall_order
         <where>
             <if test="orderNo!=null and orderNo!=''">
                 and order_no = #{orderNo}
@@ -101,11 +101,11 @@
         </where>
     </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_order set is_deleted=1
+    update tb_xx_mall_order set is_deleted=1
     where order_id = #{orderId,jdbcType=BIGINT} and is_deleted=0
   </update>
-    <insert id="insert" parameterType="ltd.xx.mall.entity.NewBeeMallOrder">
-    insert into tb_newbee_mall_order (order_id, order_no, user_id,
+    <insert id="insert" parameterType="ltd.xx.mall.entity.XxMallOrder">
+    insert into tb_xx_mall_order (order_id, order_no, user_id,
       total_price, pay_status, pay_type,
       pay_time, order_status, extra_info,
       user_address,is_deleted, create_time, update_time
@@ -117,8 +117,8 @@
       )
   </insert>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="orderId"
-            parameterType="ltd.xx.mall.entity.NewBeeMallOrder">
-        insert into tb_newbee_mall_order
+            parameterType="ltd.xx.mall.entity.XxMallOrder">
+        insert into tb_xx_mall_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderId != null">
                 order_id,
@@ -203,7 +203,7 @@
         </trim>
     </insert>
     <update id="checkDone">
-        update tb_newbee_mall_order
+        update tb_xx_mall_order
         set order_status = 2,update_time = now()
         where order_id in
         <foreach collection="orderIds" item="item" index="index"
@@ -211,7 +211,7 @@
         </foreach>
     </update>
     <update id="checkOut">
-        update tb_newbee_mall_order
+        update tb_xx_mall_order
         set order_status = 3,update_time = now()
         where order_id in
         <foreach collection="orderIds" item="item" index="index"
@@ -219,15 +219,15 @@
         </foreach>
     </update>
     <update id="closeOrder">
-        update tb_newbee_mall_order
+        update tb_xx_mall_order
         set order_status = #{orderStatus},update_time = now()
         where order_id in
         <foreach collection="orderIds" item="item" index="index"
                  open="(" separator="," close=")">#{item}
         </foreach>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="ltd.xx.mall.entity.NewBeeMallOrder">
-        update tb_newbee_mall_order
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.xx.mall.entity.XxMallOrder">
+        update tb_xx_mall_order
         <set>
             <if test="orderNo != null">
                 order_no = #{orderNo,jdbcType=VARCHAR},
@@ -268,8 +268,8 @@
         </set>
         where order_id = #{orderId,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="ltd.xx.mall.entity.NewBeeMallOrder">
-    update tb_newbee_mall_order
+    <update id="updateByPrimaryKey" parameterType="ltd.xx.mall.entity.XxMallOrder">
+    update tb_xx_mall_order
     set order_no = #{orderNo,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=BIGINT},
       total_price = #{totalPrice,jdbcType=INTEGER},

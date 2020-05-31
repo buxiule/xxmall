@@ -25,7 +25,7 @@ public class XxMallGoodsServiceImpl implements XxMallGoodsService {
 
     @Override
     public PageResult getXxMallGoodsPage(PageQueryUtil pageUtil) {
-        List<XxMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
+        List<XxMallGoods> goodsList = goodsMapper.findXxMallGoodsList(pageUtil);
         int total = goodsMapper.getTotalXxMallGoods(pageUtil);
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
@@ -40,9 +40,9 @@ public class XxMallGoodsServiceImpl implements XxMallGoodsService {
     }
 
     @Override
-    public void batchSaveXxMallGoods(List<XxMallGoods> newBeeMallGoodsList) {
-        if (!CollectionUtils.isEmpty(newBeeMallGoodsList)) {
-            goodsMapper.batchInsert(newBeeMallGoodsList);
+    public void batchSaveXxMallGoods(List<XxMallGoods> xxMallGoodsList) {
+        if (!CollectionUtils.isEmpty(xxMallGoodsList)) {
+            goodsMapper.batchInsert(xxMallGoodsList);
         }
     }
 

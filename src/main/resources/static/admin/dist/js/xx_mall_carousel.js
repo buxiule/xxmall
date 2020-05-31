@@ -5,9 +5,10 @@ $(function () {
         colModel: [
             {label: 'id', name: 'carouselId', index: 'carouselId', width: 50, key: true, hidden: true},
             {label: '轮播图', name: 'carouselUrl', index: 'carouselUrl', width: 180, formatter: coverImageFormatter},
-            {label: '跳转链接', name: 'redirectUrl', index: 'redirectUrl', width: 120},
-            {label: '排序值', name: 'carouselRank', index: 'carouselRank', width: 120},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
+            {label: '跳转链接', name: 'redirectUrl', index: 'redirectUrl', width: 100},
+            {label: '商品编号', name: 'goodsId', index: 'goodsId', width: 80},
+            {label: '排序值', name: 'carouselRank', index: 'carouselRank', width: 100},
+            {label: '添加时间', name: 'createTime', index: 'createTime', width: 100}
         ],
         height: 560,
         rowNum: 10,
@@ -44,11 +45,31 @@ $(function () {
         $("#jqGrid").setGridWidth($(".card-body").width());
     });
 
+    // new AjaxUpload('#uploadCarouselImage', {
+    //     action: '/admin/upload/file',
+    //     name: 'file',
+    //     autoSubmit: true,
+    //     responseType: "json",
+    //     onSubmit: function (file, extension) {
+    //         if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
+    //             alert('只支持jpg、png、gif格式的文件！');
+    //             return false;
+    //         }
+    //     },
+    //     onComplete: function (file, r) {
+    //         if (r != null && r.resultCode == 200) {
+    //             $("#carouselImg").attr("src", r.data);
+    //             $("#carouselImg").attr("style", "width: 128px;height: 128px;display:block;");
+    //             return false;
+    //         } else {
+    //             alert("error");
+    //         }
+    //     }
+    // });
     new AjaxUpload('#uploadCarouselImage', {
         action: '/admin/upload/file',
         name: 'file',
         autoSubmit: true,
-        responseType: "json",
         onSubmit: function (file, extension) {
             if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
                 alert('只支持jpg、png、gif格式的文件！');
@@ -56,6 +77,8 @@ $(function () {
             }
         },
         onComplete: function (file, r) {
+            r = $.parseJSON(r.replace(/<.*?>/ig,""))
+            console.log(r);
             if (r != null && r.resultCode == 200) {
                 $("#carouselImg").attr("src", r.data);
                 $("#carouselImg").attr("style", "width: 128px;height: 128px;display:block;");
@@ -87,11 +110,13 @@ function carouselAdd() {
 $('#saveButton').click(function () {
     var redirectUrl = $("#redirectUrl").val();
     var carouselRank = $("#carouselRank").val();
+    var goodsId = $("#goodsId").val();
     var carouselUrl = $('#carouselImg')[0].src;
     var data = {
         "carouselUrl": carouselUrl,
         "carouselRank": carouselRank,
-        "redirectUrl": redirectUrl
+        "redirectUrl": redirectUrl,
+        "goodsId": goodsId
     };
     var url = '/admin/carousels/save';
     var id = getSelectedRowWithoutAlert();
@@ -101,7 +126,8 @@ $('#saveButton').click(function () {
             "carouselId": id,
             "carouselUrl": carouselUrl,
             "carouselRank": carouselRank,
-            "redirectUrl": redirectUrl
+            "redirectUrl": redirectUrl,
+            "goodsId": goodsId
         };
     }
     $.ajax({

@@ -1,5 +1,7 @@
 package ltd.xx.mall.controller.vo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 /**
  * 订单详情页页面VO
  */
+@Data
 public class XxMallOrderDetailVO implements Serializable {
 
     private String orderNo;
@@ -30,6 +33,8 @@ public class XxMallOrderDetailVO implements Serializable {
     private String userAddress;
 
     private Date createTime;
+
+    private int goodsCarriage;
 
     private List<XxMallOrderItemVO> xxMallOrderItemVOS;
 

@@ -2,7 +2,7 @@ package ltd.xx.mall.entity;
 
 import java.util.Date;
 
-public class NewBeeMallOrderItem {
+public class XxMallOrderItem {
     private Long orderItemId;
 
     private Long orderId;
