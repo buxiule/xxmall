@@ -1,8 +1,11 @@
 package ltd.xx.mall.util;
 
+import ltd.xx.mall.controller.common.BusinessException;
 import org.springframework.util.StringUtils;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.*;
 
 /**
  * @author 13
@@ -18,6 +21,30 @@ public class MallUtils {
         }
         return effectiveURI;
     }
+
+    public static Map<String, String> aliPayGetParams(Map<String,String[]> requestParams) {
+        Map<String,String> params = new HashMap<String,String>();
+        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
+            String name = (String) iter.next();
+            String[] values = (String[]) requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i]
+                        : valueStr + values[i] + ",";
+            }
+            //乱码解决，这段代码在出现乱码时使用
+            try {
+                valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+            }catch (Exception e){
+                throw new BusinessException("fail");
+            }
+            params.put(name, valueStr);
+        }
+        return params;
+    }
+//    Map<String,String> params = new HashMap<String,String>();
+//    Map<String,String[]> requestParams = request.getParameterMap();
+
 
     public static String cleanString(String value) {
         if (StringUtils.isEmpty(value)) {

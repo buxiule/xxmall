@@ -3,6 +3,7 @@ package ltd.xx.mall.controller.mall;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import ltd.xx.mall.common.*;
 import ltd.xx.mall.config.AlipayConfig;
@@ -13,13 +14,12 @@ import ltd.xx.mall.controller.vo.XxMallUserVO;
 import ltd.xx.mall.entity.XxMallOrder;
 import ltd.xx.mall.service.XxMallOrderService;
 import ltd.xx.mall.service.XxMallShoppingCartService;
-import ltd.xx.mall.util.HttpUtil;
-import ltd.xx.mall.util.PageQueryUtil;
-import ltd.xx.mall.util.Result;
-import ltd.xx.mall.util.ResultGenerator;
+import ltd.xx.mall.util.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -53,6 +54,27 @@ public class OrderController {
         return "mall/order-detail";
     }
 
+    @GetMapping("/alipayDeal")
+    public String alipayDeal(HttpServletRequest request, @RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType, HttpSession httpSession) {
+        XxMallOrder order = judgeOrderUserId(orderNo, httpSession);
+        if (ObjectUtils.isEmpty(order)) {
+            return "error/error_5xx";
+        }
+        String payResult = xxMallOrderService.paySuccess(orderNo, payType);
+        if (!ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
+            return "error/error_5xx";
+        }
+        XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        XxMallOrderDetailVO orderDetailVO = xxMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
+        if (orderDetailVO == null) {
+            return "error/error_5xx";
+        }
+        orderDetailVO.setGoodsCarriage(Constants.GOODS_CARRIAGE);
+        request.setAttribute("orderDetailVO", orderDetailVO);
+        return "mall/order-detail";
+    }
+
+
     @GetMapping("/orders")
     public String orderListPage(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpSession httpSession) {
         XxMallUserVO user = (XxMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
@@ -67,6 +89,8 @@ public class OrderController {
         request.setAttribute("path", "orders");
         return "mall/my-orders";
     }
+
+
 
     @GetMapping("/saveOrder")
     public String saveOrder(HttpSession httpSession) {
@@ -175,14 +199,15 @@ public class OrderController {
             AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
             // 在公共参数中设置回跳和通知地址
             String url = HttpUtil.getRequestContext(request);
-            alipayRequest.setReturnUrl(url + "/orders/" + order.getOrderNo());
-            alipayRequest.setNotifyUrl(url + "/paySuccess?orderNo=" + order.getOrderNo() + "&payType=" + 1);
+            alipayRequest.setReturnUrl(url + "/alipayDeal?orderNo=" + order.getOrderNo() + "&payType=" + 1);
+//            alipayRequest.setReturnUrl(url + "/orders/" + order.getOrderNo());
+            alipayRequest.setNotifyUrl(url + "/alipaySuccess" );
 
             // 填充业务参数
 
             // 必填
             // 商户订单号，需保证在商户端不重复
-            String out_trade_no = order.getOrderNo() + new Random().nextInt(9999);
+            String out_trade_no = order.getOrderNo(); //+ new Random().nextInt(9999);
             // 销售产品码，与支付宝签约的产品码名称。目前仅支持FAST_INSTANT_TRADE_PAY
             String product_code = "FAST_INSTANT_TRADE_PAY";
             // 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。
@@ -211,6 +236,17 @@ public class OrderController {
         }
     }
 
+//    @GetMapping("/paySuccess")
+//    @ResponseBody
+//    public Result paySuccess(@RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType) {
+//        String payResult = xxMallOrderService.paySuccess(orderNo, payType);
+//        if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
+//            return ResultGenerator.genSuccessResult();
+//        } else {
+//            return ResultGenerator.genFailResult(payResult);
+//        }
+//    }
+
     @GetMapping("/paySuccess")
     @ResponseBody
     public Result paySuccess(@RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType) {
@@ -221,5 +257,88 @@ public class OrderController {
             return ResultGenerator.genFailResult(payResult);
         }
     }
+
+    @PostMapping("/alipaySuccess")
+    @ResponseBody
+    public Result paySuccess(HttpServletRequest request)  {
+
+//        Map params = MallUtils.aliPayGetParams(request.getParameterMap());
+//        if (params == null) {
+//            return ResultGenerator.genFailResult("Fail");
+//        }
+        if (request == null) {
+            return ResultGenerator.genFailResult("Fail");
+        }
+        String orderNo = null;
+        try {
+            orderNo = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (orderNo == null) {
+            return ResultGenerator.genFailResult("miss order");
+        }
+        String payResult = xxMallOrderService.paySuccess(orderNo, 1);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(payResult);
+        }
+    }
+//        boolean signVerified = AlipaySignature.rsaCheckV1(params,alipayConfig.getAlipayPublicKey(), alipayConfig.getCharset(), alipayConfig.getSigntype());
+//        if(signVerified) {//验证成功
+//            //商户订单号
+//            String out_trade_no = new String(request.getParameter("").getBytes("ISO-8859-1"),"UTF-8");
+//
+//            //支付宝交易号
+////            String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+//
+//            //交易状态
+////            String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+//
+////            if(trade_status.equals("TRADE_FINISHED")){
+////                //判断该笔订单是否在商户网站中已经做过处理
+////                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+////                //如果有做过处理，不执行商户的业务程序
+////
+////                //注意：
+////                //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+////            }else if (trade_status.equals("TRADE_SUCCESS")){
+////                //判断该笔订单是否在商户网站中已经做过处理
+////                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+////                //如果有做过处理，不执行商户的业务程序
+////
+////                //注意：
+////                //付款完成后，支付宝系统发送该交易状态通知
+////            }
+//
+//
+//        }else {//验证失败
+//            out.println("fail");
+//
+//            //调试用，写文本函数记录程序运行情况是否正常
+//            //String sWord = AlipaySignature.getSignCheckContentV1(params);
+//            //AlipayConfig.logResult(sWord);
+//        }
+//    }
+//    @GetMapping("/paySuccess")
+//    @ResponseBody
+//    public R paySuccess(@RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType, HttpSession session) {
+//        XxMallOrder order = judgeOrderUserId(orderNo, session);
+//        if (order != null) {
+//            //todo 判断订单状态
+//            if (order.getOrderStatus() != XxMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()
+//                    || order.getPayStatus() != PayStatusEnum.PAY_ING.getPayStatus()) {
+//                throw new BusinessException("订单关闭异常");
+//            }
+//            order.setOrderStatus((byte) XxMallOrderStatusEnum.OREDER_PAID.getOrderStatus());
+//            order.setPayType((byte) payType);
+//            order.setPayStatus((byte) PayStatusEnum.PAY_SUCCESS.getPayStatus());
+//            order.setPayTime(new Date());
+//            order.setUpdateTime(new Date());
+//            xxMallOrderService.updateOrderInfo(order);
+//        }
+//        return R.success();
+//    }
 
 }

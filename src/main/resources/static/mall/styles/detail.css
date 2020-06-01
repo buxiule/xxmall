@@ -43,13 +43,15 @@
 }
 
 #detail .intro .left {
-    width: 560px;
+    width: 450px;
+    height: 450px;
 }
 
 #detail .intro .left > img {
     width: 100%;
     height: 100%;
 }
+
 
 #detail .intro .left .smallbox {
     display: none;

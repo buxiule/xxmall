@@ -42,13 +42,13 @@ public class XxMallWebMvcConfigurer implements WebMvcConfigurer {
 //                .addPathPatterns("/goods/detail/**")
 //                .addPathPatterns("/shop-cart")
 //                .addPathPatterns("/shop-cart/**")
-                .addPathPatterns("/saveOrder")
-                .addPathPatterns("/orders")
-                .addPathPatterns("/orders/**")
+//                .addPathPatterns("/saveOrder")
+//                .addPathPatterns("/orders")
+//                .addPathPatterns("/orders/**")
                 .addPathPatterns("/personal")
-                .addPathPatterns("/personal/updateInfo")
-                .addPathPatterns("/selectPayType")
-                .addPathPatterns("/payPage");
+                .addPathPatterns("/personal/updateInfo");
+//                .addPathPatterns("/selectPayType");
+//                .addPathPatterns("/payPage");
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
